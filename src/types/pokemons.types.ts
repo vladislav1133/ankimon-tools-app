@@ -8,7 +8,7 @@ export type PokemonStats = {
   xp?: number; // xp is optional in some contexts
 };
 
-export type Pokemon = {
+export type AnkiPokemon = {
   name: string;
   nickname: string;
   level: number;
@@ -33,3 +33,22 @@ export type Pokemon = {
   'special-form': string | null;
   evos: string[];
 };
+
+interface ApiPokemon {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+  types: {
+    slot: number;
+    type: {
+      name: string;  // e.g., "electric"
+      url: string;
+    }
+  }[];
+  sprites: {
+    front_default: string | null;
+    // other sprite urls...
+  };
+  // add more fields if needed
+}

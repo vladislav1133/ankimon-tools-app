@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Typography, TextField, Button, Box } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
-import {Pokemon} from '../types/pokemons.types';
+import React, {useEffect, useState} from 'react';
+import {Box, Button, TextField, Typography} from '@mui/material';
+import {useSearchParams} from 'react-router-dom';
+import {AnkiPokemon} from '../types/pokemons.types';
 
 // type Pokemon = {
 //   name: string;
@@ -9,17 +9,61 @@ import {Pokemon} from '../types/pokemons.types';
 //   // Add more fields as needed
 // };
 
+interface BattlePokemon {
+  name: string
+  id: number
+  caughtAt?: Date | string
+  valid: boolean
+}
 type UserWithPokemons = {
   name: string;
-  pokemons: Pokemon[];
+  pokemons: BattlePokemon[];
 };
 
 const CatchEventBattle: React.FC = () => {
   const [searchParams] = useSearchParams();
   const pokemonIds = searchParams.getAll('catchPokemons');
+  const [needPokemons, setNeedPokemons] = useState<any[]>([]);
+
+  useEffect(() => {
+    console.log('---1133x 🍉', 'needPokemons', needPokemons);
+  }, [needPokemons]);
+
+  useEffect(() => {
+    if (!pokemonIds || pokemonIds.length === 0) {
+      setNeedPokemons([]);
+      return;
+    }
+
+    async function fetchPokemons() {
+      try {
+        // fetch all pokemons concurrently
+        const names = await Promise.all(pokemonIds.map(id => getPokemonNameById(Number(id))));
+        setNeedPokemons(names);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchPokemons();
+  }, []);
+
+
+  async function getPokemonNameById(id: number) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    if (!response.ok) {
+      throw new Error('Pokémon not found');
+    }
+    return await response.json();  // this is the Pokémon name
+  }
+
+
+  useEffect(() => {
+    getPokemonNameById(25).then(pok => console.log('1133b', pok));  // prints "pikachu"
+  }, []);
 
   const [userName, setUserName] = useState('');
-  const [uploadedPokemons, setUploadedPokemons] = useState<Pokemon[] | null>(null);
+  const [uploadedPokemons, setUploadedPokemons] = useState<AnkiPokemon[] | null>(null);
   const [users, setUsers] = useState<UserWithPokemons[]>([]);
 
   console.log('---1133', `users`, users);
@@ -41,15 +85,21 @@ const CatchEventBattle: React.FC = () => {
     reader.readAsText(file);
   };
 
-  const filterPokemonsByRules = (poks: Pokemon[]) => {
+  const filterPokemonsByRules = (
+    playerPoks: AnkiPokemon[],
+  ): BattlePokemon[] => {
+    return needPokemons.map((needPok) => {
+      const match = playerPoks.find((playerPok) => playerPok.id === needPok.id);
 
-    const updatedPks = poks.filter((pok) => {
-      return pokemonIds.includes(String(pok.id))
+      return {
+        id: needPok.id,
+        name: needPok.name,
+        valid: !!match,
+        caughtAt: match?.captured_date
+      };
     });
+  };
 
-    console.log('---1133a', `poks`, updatedPks);
-    return updatedPks;
-  }
   const handleAddUser = () => {
     if (!userName || !uploadedPokemons) {
       alert('Please enter a name and upload a valid Pokémon file.');
@@ -66,8 +116,6 @@ const CatchEventBattle: React.FC = () => {
 
     setUsers((prev) => [...prev, newUser]);
 
-
-
     setUserName('');
     setUploadedPokemons(null);
   };
@@ -76,32 +124,39 @@ const CatchEventBattle: React.FC = () => {
     <div>
       <Typography variant="h4" gutterBottom>CATCH BATTLE</Typography>
 
-      <Box mb={4}>
-        <TextField
-          label="User Name"
-          value={userName}
-          fullWidth
-          onChange={(e) => setUserName(e.target.value)}
-          sx={{ mb: 2 }}
-        />
+      <Typography variant="h5" gutterBottom>Need to Catch</Typography>
+      <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px'}}>
+        {needPokemons.map((pok) => (
+          <div key={pok.id}>
+            {pok.name} - {pok.id}
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pok.id}.png`}
+              alt=""
+            />
+          </div>
+        ))}
+      </div>
 
-        <input type="file" accept="application/json" onChange={handleFileUpload} />
+      <br/>
+      <br/>
+      <br/>
+      <Typography variant="h5" gutterBottom>Add user to Table</Typography>
 
-        <Button variant="contained" onClick={handleAddUser} sx={{ mt: 2 }}>
-          Add User with Pokémons
-        </Button>
-      </Box>
+
 
       {users.length > 0 && (
         <Box mb={4}>
-          <Typography variant="h6">Registered Users:</Typography>
           {users.map((user, idx) => (
             <Box key={idx} mb={2}>
-              <Typography><strong>{user.name}</strong></Typography>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+              <Typography variant="h3"><strong>{user.name}</strong></Typography>
+              <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2}}>
                 {user.pokemons.map((p, i) => (
-                  <Box key={i} sx={{ textAlign: 'center' }}>
+                  <Box key={i} sx={{textAlign: 'center'}}>
                     <img
+                      style={{
+                        filter: p.valid ? 'none' : 'grayscale(100%)',
+                        opacity: p.valid ? 1 : 0.5, // optional to make it more "disabled"
+                      }}
                       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`}
                       alt={p.name}
                     />
@@ -114,17 +169,23 @@ const CatchEventBattle: React.FC = () => {
         </Box>
       )}
 
-      <div>
-        {pokemonIds.map((id) => (
-          <div key={id}>
-            ID: {id}
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-              alt=""
-            />
-          </div>
-        ))}
-      </div>
+
+      <Box mb={4}>
+        <TextField
+          label="User Name"
+          value={userName}
+          fullWidth
+          onChange={(e) => setUserName(e.target.value)}
+          sx={{mb: 2}}
+        />
+
+        <input type="file" accept="application/json" onChange={handleFileUpload}/>
+
+        <Button variant="contained" onClick={handleAddUser} sx={{mt: 2}}>
+          Add User with Pokémons
+        </Button>
+      </Box>
+
     </div>
   );
 };

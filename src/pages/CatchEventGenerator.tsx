@@ -3,7 +3,7 @@ import {Box, Button, TextField, Typography} from '@mui/material';
 
 const CatchEventGenerator: React.FC = () => {
 
-  const [pokemonIds, setPokemonIds] = useState<string[]>(['15', '25', '66']);
+  const [pokemonIds, setPokemonIds] = useState<string[]>(['4', '15', '25', '66']);
   const [link, setLink] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
