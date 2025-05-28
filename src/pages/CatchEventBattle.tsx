@@ -26,6 +26,10 @@ const CatchEventBattle: React.FC = () => {
   const dateStart = searchParams.get('date_start') || '';
   const dateEnd = searchParams.get('date_end') || '';
 
+  useEffect(() => {
+    console.log('---1133gg 🍉', 'dateStart', dateStart);
+  }, [dateStart]);
+
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
 
   useEffect(() => {
@@ -143,7 +147,8 @@ const CatchEventBattle: React.FC = () => {
 
       <div className="border rounded p-2 mb-2 mt-2">
         <div>Rules:</div>
-        <div>Start/End: {dateStart} - {dateEnd}</div>
+        <div>Start Day: {dateStart}</div>
+        <div>End Day: {dateEnd}</div>
       </div>
 
 
