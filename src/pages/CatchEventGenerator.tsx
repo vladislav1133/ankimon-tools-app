@@ -21,7 +21,7 @@ const CatchEventGenerator: React.FC = () => {
       params.append('date_end', endDate);
     }
 
-    setLink(`/catch-event-battle?${params.toString()}`);
+    setLink(`https://vladislav1133.github.io/ankimon-tools-app/#/catch-event-battle?${params.toString()}`);
   }
 
   return (
