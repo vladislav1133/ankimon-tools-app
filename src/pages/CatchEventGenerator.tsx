@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
 
 
-// const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
-const url = 'http://localhost:3000/#/'
+const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
+// const url = 'http://localhost:3000/#/'
 
 
 const getTomorrowDate = () => {
