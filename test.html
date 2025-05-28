@@ -1,0 +1,79 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pokémon Duplicate Finder</title>
+  <style>
+      body { font-family: sans-serif; margin: 2em; }
+      textarea { width: 100%; height: 200px; }
+      pre { background: #f0f0f0; padding: 1em; }
+      .copy-btn { margin-top: 1em; }
+  </style>
+</head>
+<body>
+<h1>Pokémon Duplicate Finder</h1>
+<input type="file" id="fileInput" accept=".json,.txt">
+<button class="copy-btn" id="copyBtn" style="display:none;">Copy Output to Clipboard</button>
+<pre id="output"></pre>
+
+<script>
+  function findDuplicates(pokemonList) {
+    // Map: key = id + '|' + name, value = array of levels
+    const map = {};
+    for (const p of pokemonList) {
+      if (!('id' in p) || !('name' in p) || !('level' in p)) continue;
+      const key = p.id + '|' + p.name;
+      if (!map[key]) map[key] = [];
+      map[key].push(p.level);
+    }
+    // Collect duplicates and sort by id ascending
+    const result = [];
+    for (const key in map) {
+      if (map[key].length > 1) {
+        const [id, name] = key.split('|');
+        result.push({ id: Number(id), name, levels: map[key].slice().sort((a, b) => a - b) });
+      }
+    }
+    result.sort((a, b) => a.id - b.id);
+    return result;
+  }
+
+  function formatOutput(dupes) {
+    if (dupes.length === 0) return "No duplicates found.";
+    let lines = ["Duplicate Pokémon (by id, name) and their levels:"];
+    for (const d of dupes) {
+      lines.push(`ID ${d.id.toString().padStart(3)} | ${d.name}: levels ${d.levels.join(', ')}`);
+    }
+    return lines.join('\n');
+  }
+
+  document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const data = JSON.parse(evt.target.result);
+        const dupes = findDuplicates(data);
+        const output = formatOutput(dupes);
+        document.getElementById('output').textContent = output;
+        document.getElementById('copyBtn').style.display = 'inline-block';
+      } catch (err) {
+        document.getElementById('output').textContent = "Error: " + err.message;
+        document.getElementById('copyBtn').style.display = 'none';
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function() {
+    const text = document.getElementById('output').textContent;
+    navigator.clipboard.writeText(text).then(
+      () => alert('Output copied to clipboard!'),
+      () => alert('Failed to copy!')
+    );
+  });
+</script>
+</body>
+</html>
