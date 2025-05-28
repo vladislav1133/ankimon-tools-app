@@ -23,6 +23,9 @@ type UserWithPokemons = {
 const CatchEventBattle: React.FC = () => {
   const [searchParams] = useSearchParams();
   const pokemonIds = searchParams.getAll('catchPokemons');
+  const dateStart = searchParams.get('date_start') || '';
+  const dateEnd = searchParams.get('date_end') || '';
+
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
 
   useEffect(() => {
@@ -88,14 +91,26 @@ const CatchEventBattle: React.FC = () => {
   const filterPokemonsByRules = (
     playerPoks: AnkiPokemon[],
   ): BattlePokemon[] => {
+    const start = new Date(dateStart);
+    const end = new Date(dateEnd);
+
     return needPokemons.map((needPok) => {
-      const match = playerPoks.find((playerPok) => playerPok.id === needPok.id);
+      const matching = playerPoks
+        .filter((playerPok) => playerPok.id === needPok.id)
+        .filter((p) => {
+          const date = new Date(p.captured_date);
+          return date >= start && date <= end;
+        });
+
+      const earliest = matching.reduce((min, curr) => {
+        return !min || new Date(curr.captured_date) < new Date(min.captured_date) ? curr : min;
+      }, undefined as AnkiPokemon | undefined);
 
       return {
         id: needPok.id,
         name: needPok.name,
-        valid: !!match,
-        caughtAt: match?.captured_date
+        valid: !!earliest,
+        caughtAt: earliest?.captured_date
       };
     });
   };
@@ -125,6 +140,13 @@ const CatchEventBattle: React.FC = () => {
       <Typography variant="h4" gutterBottom>CATCH BATTLE</Typography>
 
       <Typography variant="h5" gutterBottom>Need to Catch</Typography>
+
+      <div className="border rounded p-2 mb-2 mt-2">
+        <div>Rules:</div>
+        <div>Start/End: {dateStart} - {dateEnd}</div>
+      </div>
+
+
       <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px'}}>
         {needPokemons.map((pok) => (
           <div key={pok.id}>
@@ -141,8 +163,6 @@ const CatchEventBattle: React.FC = () => {
       <br/>
       <br/>
       <Typography variant="h5" gutterBottom>Add user to Table</Typography>
-
-
 
       {users.length > 0 && (
         <Box mb={4}>

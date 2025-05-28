@@ -10,7 +10,17 @@ const CatchEventGenerator: React.FC = () => {
 
   const generateEvent = () => {
     const params = new URLSearchParams();
+
     pokemonIds.forEach(id => params.append('catchPokemons', id));
+
+    if (startDate) {
+      params.append('date_start', startDate);
+    }
+
+    if (endDate) {
+      params.append('date_end', endDate);
+    }
+
     setLink(`/catch-event-battle?${params.toString()}`);
   }
 
