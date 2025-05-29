@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
 import {useSearchParams} from 'react-router-dom';
 import {AnkiPokemon} from '../types/pokemons.types';
+import { differenceInDays } from 'date-fns';
+import {getGenColor, getGenListFromIds} from '../utils/pokemons.utils';
 
 // type Pokemon = {
 //   name: string;
@@ -22,9 +24,12 @@ type UserWithPokemons = {
 
 const CatchEventBattle: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const pokemonIds = searchParams.getAll('catchPokemons');
+  const pokemonIds = searchParams.getAll('catchPokemons').map(Number);
   const dateStart = searchParams.get('date_start') || '';
   const dateEnd = searchParams.get('date_end') || '';
+  const eventName = searchParams.get('event_name') || '';
+  const daysCount = differenceInDays(new Date(dateEnd), new Date(dateStart));
+  const presentedGens = getGenListFromIds(pokemonIds);
 
   useEffect(() => {
     console.log('---1133gg 🍉', 'dateStart', dateStart);
@@ -141,25 +146,34 @@ const CatchEventBattle: React.FC = () => {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>CATCH BATTLE</Typography>
+      <Typography variant="h4" gutterBottom>Event - <span className="text-[#87CEEB]">{eventName}</span></Typography>
 
       <Typography variant="h5" gutterBottom>Need to Catch</Typography>
 
       <div className="border rounded p-2 mb-2 mt-2">
         <div>Rules:</div>
-        <div>Start Day: {dateStart}</div>
-        <div>End Day: {dateEnd}</div>
+        <div>Start - End: {dateStart} - {dateEnd}</div>
+        <div>Days: {daysCount}</div>
+      </div>
+      <div>
+        <div>Generation include:</div>
+        <div className="flex gap-2">
+          {presentedGens.map((gen) => (
+            <div style={{backgroundColor: getGenColor(gen)}}
+                 className="rounded-[6px] p-1 w-fit text-black">Gen {gen}</div>
+          ))}
+        </div>
       </div>
 
 
       <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px'}}>
         {needPokemons.map((pok) => (
           <div key={pok.id}>
-            {pok.name} - {pok.id}
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pok.id}.png`}
               alt=""
             />
+            {pok.name} #<span className="text-[#87CEEB]">{pok.id}</span>
           </div>
         ))}
       </div>

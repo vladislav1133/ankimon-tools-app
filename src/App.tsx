@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Drawer, List, ListItem, ListItemText, Box, createTheme, ThemeProvider} from '@mui/material';
 import AppBar from '@mui/material/AppBar';
@@ -12,7 +12,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import About from './pages/About';
 import Home from './pages/Home';
 import CatchEventGenerator from './pages/CatchEventGenerator';
@@ -88,6 +88,25 @@ function App(props: Props) {
   // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;
 
+
+  const location = useLocation();
+  const [pageTitle, setPageTitle] = useState('');
+
+// Set title based on hash path
+  useEffect(() => {
+    const hashPath = location.pathname;
+
+    if (hashPath === '/catch-event-make') {
+      setPageTitle('Catch Event - Make');
+    } else if (hashPath === '/catch-event-battle') {
+      setPageTitle('Catch Event - Battle');
+    } else if (hashPath === '/') {
+      setPageTitle('Home');
+    } else {
+      setPageTitle('Ankimon Tools');
+    }
+  }, [location.pathname]);
+
   return (
     <ThemeProvider theme={darkTheme}>
         <CssBaseline />
@@ -111,7 +130,7 @@ function App(props: Props) {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                Responsive drawer
+                {pageTitle || 'Responsive drawer'}
               </Typography>
             </Toolbar>
           </AppBar>
