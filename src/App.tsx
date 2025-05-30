@@ -16,7 +16,7 @@ import {BrowserRouter, Route, Routes, useLocation, useNavigate} from 'react-rout
 import About from './pages/About';
 import Home from './pages/Home';
 import CatchEventGenerator from './pages/CatchEventGenerator';
-import CatchEventBattle from './pages/CatchEventBattle';
+import CatchEventBattle from './pages/CatchEventBattle/CatchEventBattle';
 
 const darkTheme = createTheme({palette: {mode: "dark",},});
 

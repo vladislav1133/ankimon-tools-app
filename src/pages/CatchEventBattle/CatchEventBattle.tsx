@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
 import {useSearchParams} from 'react-router-dom';
-import {AnkiPokemon} from '../types/pokemons.types';
+import {AnkiPokemon} from '../../types/pokemons.types';
 import { differenceInDays } from 'date-fns';
-import {getGenColor, getGenListFromIds} from '../utils/pokemons.utils';
+import {getGenColor, getGenListFromIds} from '../../utils/pokemons.utils';
+import BattlePlayerView from './BattlePlayerView';
 
 // type Pokemon = {
 //   name: string;
@@ -15,11 +16,13 @@ interface BattlePokemon {
   name: string
   id: number
   caughtAt?: Date | string
-  valid: boolean
+  caught: boolean
 }
-type UserWithPokemons = {
-  name: string;
-  pokemons: BattlePokemon[];
+export type UserWithPokemons = {
+  name: string
+  caughtNum: number
+  pokemons: BattlePokemon[]
+  timeSpent: number
 };
 
 const CatchEventBattle: React.FC = () => {
@@ -118,7 +121,7 @@ const CatchEventBattle: React.FC = () => {
       return {
         id: needPok.id,
         name: needPok.name,
-        valid: !!earliest,
+        caught: !!earliest,
         caughtAt: earliest?.captured_date
       };
     });
@@ -133,9 +136,21 @@ const CatchEventBattle: React.FC = () => {
 
     const passedPokemons = filterPokemonsByRules(uploadedPokemons);
 
+
+    console.log('---1133ee', `passedPokemons`, passedPokemons);
+    const times = passedPokemons
+      .filter(p => p.caught && p.caughtAt)
+      .map(p => new Date(p.caughtAt as string).getTime());
+
+    const timeSpent = times.length > 0
+      ? Math.max(...times) - Math.min(...times)
+      : 0; // milliseconds
+
     const newUser: UserWithPokemons = {
       name: userName,
+      caughtNum: passedPokemons.filter((o) => o.caught).length,
       pokemons: passedPokemons,
+      timeSpent,
     };
 
     setUsers((prev) => [...prev, newUser]);
@@ -180,35 +195,18 @@ const CatchEventBattle: React.FC = () => {
 
       <br/>
       <br/>
+      <hr/>
       <br/>
-      <Typography variant="h5" gutterBottom>Add user to Table</Typography>
-
       {users.length > 0 && (
         <Box mb={4}>
           {users.map((user, idx) => (
-            <Box key={idx} mb={2}>
-              <Typography variant="h3"><strong>{user.name}</strong></Typography>
-              <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2}}>
-                {user.pokemons.map((p, i) => (
-                  <Box key={i} sx={{textAlign: 'center'}}>
-                    <img
-                      style={{
-                        filter: p.valid ? 'none' : 'grayscale(100%)',
-                        opacity: p.valid ? 1 : 0.5, // optional to make it more "disabled"
-                      }}
-                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`}
-                      alt={p.name}
-                    />
-                    <Typography variant="body2">{p.name}</Typography>
-                  </Box>
-                ))}
-              </Box>
-            </Box>
+            <BattlePlayerView key={idx} user={user} pokemonIds={pokemonIds}/>
           ))}
         </Box>
       )}
 
 
+      <Typography variant="h5" gutterBottom>Add user to Table</Typography>
       <Box mb={4}>
         <TextField
           label="User Name"
