@@ -31,7 +31,7 @@ const CatchEventBattle: React.FC = () => {
   const dateStart = searchParams.get('date_start') || '';
   const dateEnd = searchParams.get('date_end') || '';
   const eventName = searchParams.get('event_name') || '';
-  const daysCount = differenceInDays(new Date(dateEnd), new Date(dateStart));
+  const daysCount = differenceInDays(new Date(dateEnd), new Date(dateStart)) + 1;
   const presentedGens = getGenListFromIds(pokemonIds);
 
   useEffect(() => {
@@ -106,6 +106,8 @@ const CatchEventBattle: React.FC = () => {
     const start = new Date(dateStart);
     const end = new Date(dateEnd);
 
+    console.log('---1133zz', `start`, start);
+    console.log('---1133zz', `end`, end);
     return needPokemons.map((needPok) => {
       const matching = playerPoks
         .filter((playerPok) => playerPok.id === needPok.id)
@@ -159,6 +161,14 @@ const CatchEventBattle: React.FC = () => {
     setUploadedPokemons(null);
   };
 
+  const winSortedUsers = [...users].sort((a, b) => {
+    if (b.caughtNum !== a.caughtNum) {
+      return b.caughtNum - a.caughtNum; // More caught first
+    }
+    return a.timeSpent - b.timeSpent; // Less time spent wins in tie
+  });
+
+  const [showPokemons, setShowPokemons] = useState(true)
   return (
     <div>
       <Typography variant="h4" gutterBottom>Event - <span className="text-[#87CEEB]">{eventName}</span></Typography>
@@ -167,7 +177,7 @@ const CatchEventBattle: React.FC = () => {
 
       <div className="border rounded p-2 mb-2 mt-2">
         <div>Rules:</div>
-        <div>Start - End: {dateStart} - {dateEnd}</div>
+        <div>Day range: {dateStart} - {dateEnd}</div>
         <div>Days: {daysCount}</div>
       </div>
       <div>
@@ -192,15 +202,19 @@ const CatchEventBattle: React.FC = () => {
           </div>
         ))}
       </div>
-
       <br/>
-      <br/>
+      <hr/>
+      <div className="mb-2 mt-2">
+        <Button style={{margin: 0}} variant="contained" onClick={() => setShowPokemons(prev => !prev)} sx={{mt: 2}}>
+          {showPokemons ? 'Show' : 'Hide'} Pokemons
+        </Button>
+      </div>
       <hr/>
       <br/>
       {users.length > 0 && (
         <Box mb={4}>
-          {users.map((user, idx) => (
-            <BattlePlayerView key={idx} user={user} pokemonIds={pokemonIds}/>
+          {winSortedUsers.map((user, idx) => (
+            <BattlePlayerView key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
           ))}
         </Box>
       )}
