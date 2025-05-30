@@ -12,15 +12,16 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {BrowserRouter, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import About from './pages/About';
 import Home from './pages/Home';
 import CatchEventGenerator from './pages/CatchEventGenerator';
 import CatchEventBattle from './pages/CatchEventBattle/CatchEventBattle';
+import CatchEventBattleHistory from './pages/CatchEventBattle/CatchEventBattleHistory';
 
 const darkTheme = createTheme({palette: {mode: "dark",},});
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 interface Props {
   /**
@@ -79,6 +80,12 @@ function App(props: Props) {
           <ListItemButton onClick={() => navigate('/catch-event-battle')}>
             <ListItemIcon><MailIcon /></ListItemIcon>
             <ListItemText primary={'Catch Event - battle'} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate('/catch-event-history')}>
+            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemText primary={'Catch Event - history'} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -180,6 +187,7 @@ function App(props: Props) {
               <Route path="/about" element={<About />} />
               <Route path="/catch-event-make" element={<CatchEventGenerator />} />
               <Route path="/catch-event-battle" element={<CatchEventBattle />} />
+              <Route path="/catch-event-history" element={<CatchEventBattleHistory />} />
               {/* Add more routes/pages here */}
             </Routes>
           </Box>

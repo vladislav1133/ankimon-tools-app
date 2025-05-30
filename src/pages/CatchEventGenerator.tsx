@@ -3,8 +3,8 @@ import {Box, Button, TextField, Typography} from '@mui/material';
 import {getGenColor, getGenListFromIds} from '../utils/pokemons.utils';
 
 
-//const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
- const url = 'http://localhost:3000/#/'
+const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
+//const url = 'http://localhost:3000/#/'
 
 
 const getTomorrowDate = () => {

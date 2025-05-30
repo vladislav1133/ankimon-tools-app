@@ -5,6 +5,9 @@ import {AnkiPokemon} from '../../types/pokemons.types';
 import { differenceInDays } from 'date-fns';
 import {getGenColor, getGenListFromIds} from '../../utils/pokemons.utils';
 import BattlePlayerView from './BattlePlayerView';
+import PokemonGenId from '../../components/PokemonGenId';
+import {getPokemonNameById} from '../../apis/pokemons';
+import {BattlePokemon, UserWithPokemons} from '../../types/events';
 
 // type Pokemon = {
 //   name: string;
@@ -12,18 +15,6 @@ import BattlePlayerView from './BattlePlayerView';
 //   // Add more fields as needed
 // };
 
-interface BattlePokemon {
-  name: string
-  id: number
-  caughtAt?: Date | string
-  caught: boolean
-}
-export type UserWithPokemons = {
-  name: string
-  caughtNum: number
-  pokemons: BattlePokemon[]
-  timeSpent: number
-};
 
 const CatchEventBattle: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -33,16 +24,11 @@ const CatchEventBattle: React.FC = () => {
   const eventName = searchParams.get('event_name') || '';
   const daysCount = differenceInDays(new Date(dateEnd), new Date(dateStart)) + 1;
   const presentedGens = getGenListFromIds(pokemonIds);
-
-  useEffect(() => {
-    console.log('---1133gg 🍉', 'dateStart', dateStart);
-  }, [dateStart]);
-
+  const [userName, setUserName] = useState('');
+  const [uploadedPokemons, setUploadedPokemons] = useState<AnkiPokemon[] | null>(null);
+  const [users, setUsers] = useState<UserWithPokemons[]>([]);
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
-
-  useEffect(() => {
-    console.log('---1133x 🍉', 'needPokemons', needPokemons);
-  }, [needPokemons]);
+  const [showPokemons, setShowPokemons] = useState(true)
 
   useEffect(() => {
     if (!pokemonIds || pokemonIds.length === 0) {
@@ -63,25 +49,11 @@ const CatchEventBattle: React.FC = () => {
     fetchPokemons();
   }, []);
 
-
-  async function getPokemonNameById(id: number) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    if (!response.ok) {
-      throw new Error('Pokémon not found');
-    }
-    return await response.json();  // this is the Pokémon name
-  }
-
-
   useEffect(() => {
     getPokemonNameById(25).then(pok => console.log('1133b', pok));  // prints "pikachu"
   }, []);
 
-  const [userName, setUserName] = useState('');
-  const [uploadedPokemons, setUploadedPokemons] = useState<AnkiPokemon[] | null>(null);
-  const [users, setUsers] = useState<UserWithPokemons[]>([]);
 
-  console.log('---1133', `users`, users);
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -104,10 +76,11 @@ const CatchEventBattle: React.FC = () => {
     playerPoks: AnkiPokemon[],
   ): BattlePokemon[] => {
     const start = new Date(dateStart);
-    const end = new Date(dateEnd);
+    start.setHours(0, 0, 0, 0); // Set to 00:00:00.000
 
-    console.log('---1133zz', `start`, start);
-    console.log('---1133zz', `end`, end);
+    const end = new Date(dateEnd);
+    end.setHours(23, 59, 59, 999); // Set to 23:59:59.999
+
     return needPokemons.map((needPok) => {
       const matching = playerPoks
         .filter((playerPok) => playerPok.id === needPok.id)
@@ -135,9 +108,7 @@ const CatchEventBattle: React.FC = () => {
       return;
     }
 
-
     const passedPokemons = filterPokemonsByRules(uploadedPokemons);
-
 
     console.log('---1133ee', `passedPokemons`, passedPokemons);
     const times = passedPokemons
@@ -168,16 +139,46 @@ const CatchEventBattle: React.FC = () => {
     return a.timeSpent - b.timeSpent; // Less time spent wins in tie
   });
 
-  const [showPokemons, setShowPokemons] = useState(true)
+
+  const saveResults = () => {
+
+    const result = {
+      rules: {
+        eventName: eventName,
+        dateStart: dateStart,
+        dateEnd: dateEnd,
+        pokemonIds: pokemonIds
+      },
+      users: winSortedUsers
+    }
+
+    const jsonString = JSON.stringify(result, null, 2); // formatted JSON
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${eventName || 'battle'}_results.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  if (!eventName) {
+    return (
+      <div>
+        Event parameters are not selected
+      </div>
+    )
+  }
   return (
     <div>
       <Typography variant="h4" gutterBottom>Event - <span className="text-[#87CEEB]">{eventName}</span></Typography>
-
-      <Typography variant="h5" gutterBottom>Need to Catch</Typography>
-
       <div className="border rounded p-2 mb-2 mt-2">
-        <div>Rules:</div>
-        <div>Day range: {dateStart} - {dateEnd}</div>
+        <div>Rules: <span className="text-[#ffb3b3]">catch as much as possible!</span></div>
+        <div>From: {dateStart} 00:00</div>
+        <div>Upto: {dateEnd} 23:59</div>
         <div>Days: {daysCount}</div>
       </div>
       <div>
@@ -190,7 +191,6 @@ const CatchEventBattle: React.FC = () => {
         </div>
       </div>
 
-
       <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px'}}>
         {needPokemons.map((pok) => (
           <div key={pok.id}>
@@ -198,15 +198,19 @@ const CatchEventBattle: React.FC = () => {
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pok.id}.png`}
               alt=""
             />
-            {pok.name} #<span className="text-[#87CEEB]">{pok.id}</span>
+
+            {pok.name} <PokemonGenId id={pok.id}/>
           </div>
         ))}
       </div>
       <br/>
       <hr/>
-      <div className="mb-2 mt-2">
+      <div className="flex mb-2 mt-2 gap-4">
         <Button style={{margin: 0}} variant="contained" onClick={() => setShowPokemons(prev => !prev)} sx={{mt: 2}}>
-          {showPokemons ? 'Show' : 'Hide'} Pokemons
+          {!showPokemons ? 'Show' : 'Hide'} Pokemons
+        </Button>
+        <Button style={{margin: 0}} variant="contained" onClick={() => saveResults()}>
+          Save Results
         </Button>
       </div>
       <hr/>

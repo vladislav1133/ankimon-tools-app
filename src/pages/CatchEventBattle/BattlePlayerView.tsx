@@ -1,8 +1,9 @@
 import React from 'react'
 import {Box, Typography} from '@mui/material';
-import {UserWithPokemons} from './CatchEventBattle';
 import {format} from 'date-fns/format';
 import {formatDuration, intervalToDuration} from 'date-fns';
+import PokemonGenId from '../../components/PokemonGenId';
+import {UserWithPokemons} from '../../types/events';
 
 type Props = {
   user: UserWithPokemons
@@ -51,7 +52,7 @@ const BattlePlayerView = ({user, pokemonIds, idx, showPokemons}: Props) => {
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`}
                 alt={p.name}
               />
-              <Typography variant="body2">{p.name}</Typography>
+              <Typography variant="body2">{p.name} <PokemonGenId id={p.id}/></Typography>
               <div>
                 {p.caughtAt ? format(new Date(p.caughtAt), 'MM-dd HH:mm') : '—'}
               </div>
