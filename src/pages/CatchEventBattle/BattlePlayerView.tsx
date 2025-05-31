@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react';
 import {Box, Typography} from '@mui/material';
 import {format} from 'date-fns/format';
 import {formatDuration, intervalToDuration} from 'date-fns';
@@ -10,9 +10,10 @@ type Props = {
   pokemonIds: number[]
   idx: number
   showPokemons: boolean
+  sortByTime: boolean
 };
 
-const BattlePlayerView = ({user, pokemonIds, idx, showPokemons}: Props) => {
+const BattlePlayerView = ({user, pokemonIds, idx, showPokemons, sortByTime}: Props) => {
 
   const formatTimeSpent = (timeSpent: number) => {
     const raw = formatDuration(intervalToDuration({ start: 0, end: timeSpent }), {
@@ -24,6 +25,14 @@ const BattlePlayerView = ({user, pokemonIds, idx, showPokemons}: Props) => {
       .replace(/\bhours?\b/, 'h')
       .replace(/\bminutes?\b/, 'min');
   };
+
+  const pokemons = sortByTime
+    ? [...user.pokemons].sort((a, b) => new Date(a.caughtAt || '2150-01-01').getTime() - new Date(b.caughtAt || '2150-01-01').getTime())
+    : user.pokemons;
+
+  useEffect(() => {
+    console.log('---1133es 🍉', 'pokemons', pokemons);
+  }, [pokemons]);
 
   return (
     <Box mb={2}>
@@ -42,7 +51,7 @@ const BattlePlayerView = ({user, pokemonIds, idx, showPokemons}: Props) => {
       </div>
       {showPokemons && (
         <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2}}>
-          {user.pokemons.map((p, i) => (
+          {pokemons.map((p, i) => (
             <Box key={i} sx={{textAlign: 'center'}}>
               <img
                 style={{

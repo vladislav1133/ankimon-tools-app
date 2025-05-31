@@ -31,6 +31,7 @@ const CatchEventBattle: React.FC = () => {
   const [users, setUsers] = useState<UserWithPokemons[]>([]);
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
   const [showPokemons, setShowPokemons] = useState(true)
+  const [sortByTime, setSortByTime] = useState(false)
 
   useEffect(() => {
     if (!pokemonIds || pokemonIds.length === 0) {
@@ -224,13 +225,16 @@ const CatchEventBattle: React.FC = () => {
         <Button style={{margin: 0}} variant="contained" onClick={() => setShowPokemons(prev => !prev)} sx={{mt: 2}}>
           {!showPokemons ? 'Show' : 'Hide'} Pokemons
         </Button>
+        <Button style={{margin: 0}} variant="outlined" onClick={() => setSortByTime(prev => !prev)} sx={{mt: 2}}>
+          Set sort by: {sortByTime ? 'catch time' : 'standard'}
+        </Button>
       </div>
       <hr/>
       <br/>
       {users.length > 0 && (
         <Box mb={4}>
           {winSortedUsers.map((user, idx) => (
-            <BattlePlayerView key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
+            <BattlePlayerView sortByTime={sortByTime} key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
           ))}
         </Box>
       )}

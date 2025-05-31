@@ -3,11 +3,11 @@ import {Box, Button, TextField} from '@mui/material';
 import {getGenColor, getGenListFromIds} from '../utils/pokemons.utils';
 import {useSearchParams} from 'react-router-dom';
 import {getParamsPokemons} from '../utils/url';
-import {getRndArray, getRndUniArr} from '../utils/math';
+import {getRndUniArr} from '../utils/math';
 
 
-const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
-// const url = 'http://localhost:3000/#/'
+//const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
+const url = 'http://localhost:3000/#/'
 
 
 const getTomorrowDate = () => {

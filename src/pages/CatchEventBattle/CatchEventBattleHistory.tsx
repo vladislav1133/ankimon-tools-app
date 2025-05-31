@@ -22,6 +22,7 @@ const CatchEventBattleHistory: React.FC = () => {
   const presentedGens = getGenListFromIds(result?.rules.pokemonIds || []);
   const pokemonIds = result?.rules.pokemonIds || [];
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
+  const [sortByTime, setSortByTime] = useState(false)
 
 
   useEffect(() => {
@@ -109,6 +110,9 @@ const CatchEventBattleHistory: React.FC = () => {
             <Button style={{margin: 0}} variant="contained" onClick={() => setShowPokemons(prev => !prev)} sx={{mt: 2}}>
               {!showPokemons ? 'Show' : 'Hide'} Pokemons
             </Button>
+            <Button style={{margin: 0}} variant="outlined" onClick={() => setSortByTime(prev => !prev)} sx={{mt: 2}}>
+              Set sort by: {sortByTime ? 'catch time' : 'standard'}
+            </Button>
           </div>
           <hr/>
           <br/>
@@ -117,7 +121,7 @@ const CatchEventBattleHistory: React.FC = () => {
           {result.users.length > 0 && (
             <Box mb={4}>
               {result.users.map((user, idx) => (
-                <BattlePlayerView key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
+                <BattlePlayerView sortByTime={sortByTime} key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
               ))}
             </Box>
           )}
