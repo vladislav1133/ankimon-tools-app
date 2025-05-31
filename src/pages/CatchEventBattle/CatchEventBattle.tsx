@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
-import {useSearchParams} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {AnkiPokemon} from '../../types/pokemons.types';
 import { differenceInDays } from 'date-fns';
 import {getGenColor, getGenListFromIds} from '../../utils/pokemons.utils';
@@ -8,6 +8,7 @@ import BattlePlayerView from './BattlePlayerView';
 import PokemonGenId from '../../components/PokemonGenId';
 import {getPokemonNameById} from '../../apis/pokemons';
 import {BattlePokemon, UserWithPokemons} from '../../types/events';
+import {getParamsPokemons} from '../../utils/url';
 
 // type Pokemon = {
 //   name: string;
@@ -17,8 +18,9 @@ import {BattlePokemon, UserWithPokemons} from '../../types/events';
 
 
 const CatchEventBattle: React.FC = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const pokemonIds = searchParams.getAll('catchPokemons').map(Number);
+  const pokemonIds = getParamsPokemons(searchParams);
   const dateStart = searchParams.get('date_start') || '';
   const dateEnd = searchParams.get('date_end') || '';
   const eventName = searchParams.get('event_name') || '';
@@ -165,16 +167,29 @@ const CatchEventBattle: React.FC = () => {
     URL.revokeObjectURL(url);
   }
 
-  if (!eventName) {
-    return (
-      <div>
-        Event parameters are not selected
-      </div>
-    )
+  const backToGenerator = () => {
+    const query = window.location.search || window.location.hash.split('?')[1] || '';
+    navigate(`/catch-event-make${query ? '?' + query : ''}`);
   }
+
+  if (!eventName) {
+    return (<div>Event parameters are not selected</div>)
+  }
+
   return (
     <div>
-      <Typography variant="h4" gutterBottom>Event - <span className="text-[#87CEEB]">{eventName}</span></Typography>
+      <Typography variant="h4" gutterBottom>Event - <span className="text-[#87CEEB]">
+        {eventName}</span>
+        <span>&nbsp;</span>
+        <Button component="span" style={{margin: 0}} variant="outlined" onClick={() => backToGenerator()}>
+          Change Rules
+        </Button>
+        <span>&nbsp;</span>
+        <Button style={{margin: 0}} variant="outlined" onClick={() => saveResults()}>
+          Save Results
+        </Button>
+      </Typography>
+
       <div className="border rounded p-2 mb-2 mt-2">
         <div>Rules: <span className="text-[#ffb3b3]">catch as much as possible!</span></div>
         <div>From: {dateStart} 00:00</div>
@@ -208,9 +223,6 @@ const CatchEventBattle: React.FC = () => {
       <div className="flex mb-2 mt-2 gap-4">
         <Button style={{margin: 0}} variant="contained" onClick={() => setShowPokemons(prev => !prev)} sx={{mt: 2}}>
           {!showPokemons ? 'Show' : 'Hide'} Pokemons
-        </Button>
-        <Button style={{margin: 0}} variant="contained" onClick={() => saveResults()}>
-          Save Results
         </Button>
       </div>
       <hr/>

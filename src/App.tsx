@@ -57,16 +57,24 @@ function App(props: Props) {
       <Toolbar />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate('/')}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </ListItem>
+        {/*{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
+        {/*  <ListItem key={text} disablePadding>*/}
+        {/*    <ListItemButton>*/}
+        {/*      <ListItemIcon>*/}
+        {/*        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}*/}
+        {/*      </ListItemIcon>*/}
+        {/*      <ListItemText primary={text} />*/}
+        {/*    </ListItemButton>*/}
+        {/*  </ListItem>*/}
+        {/*))}*/}
       </List>
       <Divider />
       <List>

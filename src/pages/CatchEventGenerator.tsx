@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
-import {Box, Button, TextField, Typography} from '@mui/material';
+import {Box, Button, TextField} from '@mui/material';
 import {getGenColor, getGenListFromIds} from '../utils/pokemons.utils';
+import {useSearchParams} from 'react-router-dom';
+import {getParamsPokemons} from '../utils/url';
+import {getRndArray, getRndUniArr} from '../utils/math';
 
 
-const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
-//const url = 'http://localhost:3000/#/'
+// const url = 'https://vladislav1133.github.io/ankimon-tools-app/#/'
+const url = 'http://localhost:3000/#/'
 
 
 const getTomorrowDate = () => {
@@ -20,19 +23,25 @@ const getDayAfterTomorrowDate = () => {
 }
 
 const CatchEventGenerator: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [newPokemonId, setNewPokemonId] = useState('');
   const [removePokemonId, setRemovePokemonId] = useState('');
-  const [pokemonIds, setPokemonIds] = useState<number[]>([4, 15, 25, 66, 86, 99, 36, 39, 107]);
   const [link, setLink] = useState('');
-  const [startDate, setStartDate] = useState(getTomorrowDate());
-  const [endDate, setEndDate] = useState(getDayAfterTomorrowDate());
+  const [startDate, setStartDate] = useState(searchParams.get('date_start') || getTomorrowDate());
+  const [endDate, setEndDate] = useState(searchParams.get('date_end') || getDayAfterTomorrowDate());
+  const [eventName, setEventName] = useState(searchParams.get('event_name') || `KAS's alpha event #1`);
+
+  const paramPoks = getParamsPokemons(searchParams);
+  const exPokemonSet = paramPoks.length ? paramPoks : getRndUniArr(1, 150, 6);
+  const [pokemonIds, setPokemonIds] = useState<number[]>(exPokemonSet);
   const presentedGens = getGenListFromIds(pokemonIds);
-  const [eventName, setEventName] = useState(`KAS's alpha event #1`);
 
   const generateEvent = () => {
     const params = new URLSearchParams();
+    if (pokemonIds.length) {
+      params.set('catchPokemons', pokemonIds.join(',')); // Shortened array
+    }
 
-    pokemonIds.forEach(id => params.append('catchPokemons', String(id)));
     if (startDate) {params.append('date_start', startDate);}
     if (endDate) {params.append('date_end', endDate);}
     if (eventName) {params.append('event_name', eventName)}
@@ -45,6 +54,19 @@ const CatchEventGenerator: React.FC = () => {
   }
   return (
     <div>
+      <div className="mb-4">
+        <div>
+          Select <span className="text-[#87CEEB]">Pokemons</span> which you will hunt with friends!
+        </div>
+        <div>
+          Select event <span className="text-[#87CEEB]">name</span> and <span className="text-[#87CEEB]">time range</span>!
+        </div>
+        <div>
+          Generate <span className="text-[#87CEEB]">link</span> and share it with you friends!
+        </div>
+      </div>
+      <hr/>
+      <br/>
       <Box display="flex" flexDirection="column" gap={2} maxWidth={300} mb={4}>
         <TextField
           label="Event Name"
@@ -136,13 +158,15 @@ const CatchEventGenerator: React.FC = () => {
       </div>
 
       <div className="flex gap-4 mt-12">
-        <Button className="" variant="contained" onClick={() => resetRules()}>
+        <Button  variant="contained" onClick={() => generateEvent()}>Generate Event</Button>
+        <Button className="" variant="outlined" onClick={() => resetRules()}>
           Reset Rules
         </Button>
-        <Button  variant="contained" onClick={() => generateEvent()}>Generate Event</Button>
       </div>
-      <div>
-        Link: <a href={link}>{link}</a>
+      <div className="mt-2">
+        {link && (<span>Link: <a className="text-[#87CEEB]" href={link}>{link || 'press "generate event"'}</a></span>)}
+        {!link && (<span>Link: press "generate event"</span>)}
+
       </div>
     </div>
   );
