@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ankimon-tools-app/static/css/main.bf902746.css",
-    "main.js": "/ankimon-tools-app/static/js/main.6adf1c82.js",
+    "main.js": "/ankimon-tools-app/static/js/main.9bf34fbf.js",
     "static/js/453.ed3810f9.chunk.js": "/ankimon-tools-app/static/js/453.ed3810f9.chunk.js",
     "index.html": "/ankimon-tools-app/index.html",
     "main.bf902746.css.map": "/ankimon-tools-app/static/css/main.bf902746.css.map",
-    "main.6adf1c82.js.map": "/ankimon-tools-app/static/js/main.6adf1c82.js.map",
+    "main.9bf34fbf.js.map": "/ankimon-tools-app/static/js/main.9bf34fbf.js.map",
     "453.ed3810f9.chunk.js.map": "/ankimon-tools-app/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bf902746.css",
-    "static/js/main.6adf1c82.js"
+    "static/js/main.9bf34fbf.js"
   ]
 }
