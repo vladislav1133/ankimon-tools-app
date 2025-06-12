@@ -44,16 +44,7 @@ const CatchEventBattleHistory: React.FC = () => {
     fetchPokemons();
   }, [result]);
 
-  useEffect(() => {
-    getPokemonNameById(25).then(pok => console.log('1133b', pok));  // prints "pikachu"
-  }, []);
-
   const [showPokemons, setShowPokemons] = useState(true)
-
-
-  useEffect(() => {
-    console.log('---1133ff 🍉', 'result', result);
-  }, [result]);
 
   return (
     <div>

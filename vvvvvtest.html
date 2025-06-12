@@ -1,0 +1,185 @@
+<!-- 🌸🌸 BACK SIDE V38 -->
+<!-- 🌸🌸 BACK SIDE V38 -->
+<div ☀️ id="tagBox" style="display: none;">{{ Tags }}</div>
+
+<div style="font-size: 18px; position: absolute; text-align: center; width: -webkit-fill-available;">
+  <span 💙 id="studyHeart" style="display:none;">{{info-Queue:}}</span>
+  <span ☀️ id="tagMarks"></span>
+</div>
+
+<div data-em="🍃" class="freq hidden">{{Frequency}}<div>{{FreqSort}}</div></div>
+
+
+<div lang="ja" class="container back">
+  <!-- --- WORD SECTION 🧱 --- -->
+  <div class="wordW c2border">
+    {{^word_furigana}}<div class="word c2border showfuri">{{word}}</div>&#160;{{/word_furigana}}
+    {{#word_furigana}}<div class="word showfuri">{{furigana:word_furigana}}</div>&#160;{{/word_furigana}}
+
+  </div>
+
+  <!-- SENTENCE 1 SECTION 🧱 -->
+  <div class="senW mb8">
+    <div class="sentence sentenceNewBack">{{furigana:sentence}}</div>
+  </div>
+  <div id="pitchBox" class="">{{pitch}}</div>
+
+  <div class=">{{#word_meaning}} mb8 >{{/word_meaning}}">
+    <div id="wordMeaning" class="meaning darkcyan c2border mb20">{{word_meaning}}</div>
+    <div class="meaning lightcyan c2border">{{furigana:word_def}}</div>
+  </div>
+
+  {{^word_meaning}}
+  {{#word_def_extra}} <!-- 🧙🏾‍♂️🧙🏾‍♂️🧙🏾‍♂️ -->
+  <div style="font-size: 24px; display:block;" class="sentence infobox misc-info popup">
+    {{word_def_extra}}
+  </div>{{/word_def_extra}}
+  {{/word_meaning}}
+
+  {{#word_def_extra2}} <!-- 🧙🏾‍♂️🧙🏾‍♂️🧙🏾‍♂️ -->
+  <div style="font-size: 24px; display:block;" class="sentence infobox misc-info popup">
+    {{word_def_extra2}}
+  </div>
+  {{/word_def_extra2}}
+
+
+  <div className="mt8" style="margin-top: 8px"></div>
+  {{#word_def_extra}}
+  <details>
+    <summary id="summary" class="summary">extra definition</summary>
+    <div style="font-size: 24px; display:block;" class="sentence infobox misc-info popup">
+      {{word_def_extra}}
+    </div>
+  </details>
+  {{/word_def_extra}}
+
+  <!-- ASSOCIATIONS 🧱-->
+  <div class="assoc">{{assoc}}</div>
+  <!-- -----NOTES SECTION 🧱----- -->
+
+  {{#sen_meaning}}<div class="notes">{{furigana:sen_meaning}}</div>{{/sen_meaning}}
+  {{#notes}}<div id="tips" class="notes">{{furigana:notes}}</div>{{/notes}}
+
+  <!-- PICTURE SECTION 🧱 -->
+  <div class="picWW">
+    <div class="mt12 picW picWcorner {{#spicy}} nsfw {{/spicy}}">{{pic_back}}</div>
+  </div>
+
+</div>
+
+<!-- AUDIO SECTION 🧱 -->
+<div style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: left;">
+  <div style="max-width: 800px; margin: 0 auto;">
+    {{#word_audio}}{{word_audio}}<span style="display:none;">[sound:_sound_3s_silence.mp3][sound:_sound_3s_silence.mp3]</span>{{/word_audio}}
+    {{sen_audio}}
+  </div>
+</div>
+
+
+<!-- TAG MANAGER 🧱 -->
+<div class="subdeck mbHidden" style="opacity: 0;"><span id="sourceTag"></span></div>
+
+<script>
+  if (!window.hasBacktickListener) {
+    window.hasBacktickListener = true;
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "`") {
+        event.preventDefault(); // Prevent default action if necessary
+        const summaryElement = document.getElementById("summary");
+        if (summaryElement) {
+          summaryElement.click();
+        }
+      }
+    });
+  }
+
+</script>
+
+
+
+
+<script>
+  // ☁️☁️ heart script V2
+  function applyHeart() {
+    const el = document.getElementById('studyHeart');
+    if (el) {
+      const hArr = { 0: '💙', 2: '💚', 1: '🤎', 3: '🤎' };
+      el.innerText = hArr[el.innerText] || '';
+      if (el.innerText) {el.style.display = 'inline';}
+    }
+  }applyHeart();//<span 💙 id="studyHeart" style="display:none;">{{info-Queue:}}</span>
+
+
+  // ☁️☁️ V1
+  function splitSentence() {
+    const el = document.getElementById('sentence');if (el) {el.innerHTML = el.innerHTML.replace(/<br\s*\/?>/gi, "<div class='splitter'></div>");}
+  }splitSentence();
+
+
+  // ☁️☁️ V1
+  function updateTags() {
+    // <div ☀️ id="tagBox" style="display: none;">{{ Tags }}</div>
+    // <div ☀️ className="subdeck mbHidden"><span id="sourceTag"></span></div>
+    // <span ☀️ id="tagMarks"></span>
+    const tags = document.getElementById("tagBox")?.innerHTML || '';
+
+    const sourceTagEl = document.getElementById("sourceTag");
+    if (sourceTagEl && tags) {
+      let source = tags.split(' ').find(word => word.startsWith('_source'));
+
+      if (source) {
+        source = source.replace(/^_source::/, '').replace(/::/g, ' - ').replace(/_/g, ' ');
+        sourceTagEl.innerHTML = `[ ${source} ]`;
+      }
+    }
+
+    const tagMarksEl = document.getElementById("tagMarks");
+    if (tagMarksEl) {
+      const markArray = { 'spicyy': 'spicy 🔥' };
+      let con = tags;
+      con = con.split(" ").filter(word => word.startsWith("_mark_hh"))
+        .map(word => {
+          word = word.replace("_mark_hh::", "");word = word.replace("::", " - ");word = markArray[word] || word;
+          return `<span style="background: rgba(0, 0, 0, 0.30); border-radius: 4px; padding: 2px 6px; font-size: 14px; color: white; margin-right: 8px;"> ${word} </span>`;
+        });
+      tagMarksEl.innerHTML = con.join(' ');
+    }
+  }updateTags();
+
+  function handleUL() { // V2
+    const wordMeaningEl = document.getElementById("wordMeaning");
+
+    if (wordMeaningEl) {
+      let con = wordMeaningEl.innerHTML;
+      if (con.includes('div')) { return; }
+      con = con.replace(/&nbsp;/g, ' ');
+      if (con.includes(";")) {if (con.endsWith(';')) {con = con.slice(0, -1);}
+        const liArr = con.split(';').map((li) => `<li>${li}</li>`).join('');
+        wordMeaningEl.innerHTML = `<ul>${liArr}</ul>`;
+      }
+    }
+  }handleUL();
+
+
+
+
+
+
+
+
+
+  function getPitchCategories() {
+    const validTypes = "(heiban|atamadaka|nakadaka|odaka|kifuku)";
+    return [...`{{pitch_category}}`.matchAll(validTypes)].map(m => m[0]);
+  }
+
+  function constructPitch() { //
+    const kana = `{{kana:word_furigana}}`;
+    const pitchType = `{{pitch_category}}`;
+    document.getElementById("pitchBox").classList.add(pitchType);
+
+    console.log('ww', kana);
+
+  } constructPitch();
+</script>

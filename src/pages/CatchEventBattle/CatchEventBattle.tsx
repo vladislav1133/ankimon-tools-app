@@ -7,7 +7,7 @@ import {getGenColor, getGenListFromIds} from '../../utils/pokemons.utils';
 import BattlePlayerView from './BattlePlayerView';
 import PokemonGenId from '../../components/PokemonGenId';
 import {getPokemonNameById} from '../../apis/pokemons';
-import {BattlePokemon, UserWithPokemons} from '../../types/events';
+import {BattlePokemon, EventResult, UserWithPokemons} from '../../types/events';
 import {getParamsPokemons} from '../../utils/url';
 
 // type Pokemon = {
@@ -19,7 +19,7 @@ import {getParamsPokemons} from '../../utils/url';
 
 const CatchEventBattle: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const pokemonIds = getParamsPokemons(searchParams);
   const dateStart = searchParams.get('date_start') || '';
   const dateEnd = searchParams.get('date_end') || '';
@@ -32,6 +32,7 @@ const CatchEventBattle: React.FC = () => {
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
   const [showPokemons, setShowPokemons] = useState(true)
   const [sortByTime, setSortByTime] = useState(false)
+  const [loadedResult, setLoadedResult] = useState<EventResult>();
 
   useEffect(() => {
     if (!pokemonIds || pokemonIds.length === 0) {
@@ -51,11 +52,6 @@ const CatchEventBattle: React.FC = () => {
 
     fetchPokemons();
   }, []);
-
-  useEffect(() => {
-    getPokemonNameById(25).then(pok => console.log('1133b', pok));  // prints "pikachu"
-  }, []);
-
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -113,7 +109,6 @@ const CatchEventBattle: React.FC = () => {
 
     const passedPokemons = filterPokemonsByRules(uploadedPokemons);
 
-    console.log('---1133ee', `passedPokemons`, passedPokemons);
     const times = passedPokemons
       .filter(p => p.caught && p.caughtAt)
       .map(p => new Date(p.caughtAt as string).getTime());
@@ -145,7 +140,7 @@ const CatchEventBattle: React.FC = () => {
 
   const saveResults = () => {
 
-    const result = {
+    const result: EventResult = {
       rules: {
         eventName: eventName,
         dateStart: dateStart,
@@ -168,13 +163,54 @@ const CatchEventBattle: React.FC = () => {
     URL.revokeObjectURL(url);
   }
 
+  const loadResultFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+
+        const result: EventResult = JSON.parse(event.target?.result as string);
+        
+        const params = new URLSearchParams(searchParams);
+        params.set('date_start', result.rules.dateStart)
+        params.set('date_end', result.rules.dateEnd)
+        params.set('event_name', result.rules.eventName)
+        params.set('catchPokemons', result.rules.pokemonIds.join(','))
+        setSearchParams(params)
+        setUsers(result.users)
+        //setLoadedResult(json);
+
+
+
+      } catch {alert('Invalid JSON format in file');}
+    };
+    reader.readAsText(file);
+  };
+
+
+
+  const loadResults = () => {
+
+  }
+
   const backToGenerator = () => {
     const query = window.location.search || window.location.hash.split('?')[1] || '';
     navigate(`/catch-event-make${query ? '?' + query : ''}`);
   }
 
   if (!eventName) {
-    return (<div>Event parameters are not selected</div>)
+    return <div>
+      Event parameters are not selected
+      <br/><br/>
+      {/* <input type="file" accept="application/json" onChange={handleFileUpload}/> */}
+      <input type="file" accept="application/json" onChange={loadResultFile}/>
+      <Button style={{margin: 0}} variant="outlined" onClick={() => loadResults()}>
+        Load Results
+      </Button>
+
+      </div>
   }
 
   return (

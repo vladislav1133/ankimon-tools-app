@@ -1,0 +1,238 @@
+/* STYLES V10 */
+
+.heiban { color: #39bae6; }
+.atamadaka { color: #ec464f; }
+.nakadaka { color: #ff8f40; }
+.odaka { color: #6cbf43; }
+.kifuku { color: #af85f4; }
+
+.freq {
+    position: fixed;
+    top: 0; left: 8px;
+    color: #c2c2c2;
+    text-align: right;
+    font-size: 14px;
+}
+.mobile .freq,
+.android .freq { display: none; }
+
+.freq ul { list-style: none; margin: 0; padding: 0;}
+.freq li {text-align: right;}
+
+
+.mobile body { padding: 0; margin: 0; }
+.android body { padding: 0; margin: 0; }
+.main body { padding: 0; margin: 0; }
+.android body { padding: 0; margin: 0; }
+
+hr { margin: 1em 0; padding: 0; border: 0; height: 1px; display: block; }
+rt { opacity: 1; user-select: none; }  rt:hover { opacity: 1;}
+i, em { color: #f8fabb; font-style: normal; }
+.word i { color: rgba(255, 170, 153, 0.6); }
+u { color: #bddba2; text-decoration: none; }
+b, strong { color: rgb(255, 170, 153);  font-weight: normal;}
+a { color: #c7edec; text-decoration: none; }
+
+.container { max-width: 900px; margin: 0 auto; text-align: left; }
+.mobile .container { padding-left: 2px; padding-right: 2px; }
+.android .container { padding-left: 2px; padding-right: 2px; }
+
+.wordW {
+    display: flex;
+    align-items: end;
+    height: 98px;
+    color: rgb(255, 170, 153);
+    white-space: nowrap;
+    margin-bottom:8px;
+    width: fit-content;
+}
+.word {
+    font-size: 70px;
+    line-height: 1;
+}
+
+.c2border {
+    background-color: rgba(44, 44, 44, 0.8);
+    border-radius: 4px;
+}
+.word b { font-size: 29px;}
+.mobile .word, .android .word { font-size: 60px; }
+
+/* --- V2 MEANING LIST 💼💼💼 --- */
+.meaning  ul { display: flex; list-style-type: none; padding: 0; margin: 0;  }
+.meaning  ul li { padding-right: 8px; margin-right: 8px; border-right: 0 solid grey;   position: relative; }
+.meaning  ul li::after {
+    content: ""; position: absolute;
+    right: 0; top: 25%; height: 50%;
+    width: 1px; background-color: grey;
+}
+.meaning > ul li:last-child::after { display:none; }
+.meaning {font-family: Arial, serif; font-size: 18px; width: fit-content; padding-right: 4px; margin-bottom: 2px; }
+
+/* --- V1 SENTENCE 💼💼💼 --- */
+.sentence { background-color: rgba(0, 0, 0, 0.15); border-radius: 4px; padding: 10px;}
+
+.senW {}
+.senW:hover { }
+
+.sentenceNewBack {
+    background-color: rgba(30, 30, 30, 0.7); /* 80% opacity */
+    width: fit-content;
+}
+
+
+/* ----------------------- */
+.sentence { font-size: 32px; }
+.android .sentence , .mobile .sentence {
+    font-size: 32px;
+    padding: 4px;
+    width: 100%;
+}
+.sentence { max-width: 334px; width: 100%; }
+
+
+/* --- V1 NOTES UPGRADE 💼💼💼 --- */
+.notes { opacity: 0.2; filter: blur(5px); transition: opacity 0.2s ease-in-out;}
+.notes:hover { opacity: 1; filter: blur(0); }
+/* ----------------------- */
+.notes {
+    width: fit-content; max-width: 100%;
+    padding: 4px 0;margin: 4px 0;
+    font-size:24px;
+}
+.assoc {font-family: Arial, serif; font-size: 22px; color: #b184bf;}
+
+/* --- V3 IMAGE STYLES 💼💼💼 --- */
+.picW { display: flex; flex-direction: column; overflow: hidden; width: fit-content; border-radius: 16px; }
+.picW > img { border-radius: 16px; }
+
+/* picture 🖼🖼🖼🖼🖼*/
+/* picture 🖼🖼🖼🖼🖼*/
+
+.picWcorner {
+    position: absolute;
+    margin: 0 !important;
+    top: 8px;
+    right: 8px;
+    border-radius: 8px; z-index: -1;
+}
+
+.picWcorner img { border-radius: 8px; }
+
+.picW img + img { margin-top: 24px; }
+.nsfw > img { filter: blur(8px); transition: filter 1.4s ease-in-out;}
+img:hover { filter: blur(0); }
+/* ----------------------- */
+img { max-width: 480px; max-height: 600px; }
+.mobile img { max-width: 100%; }
+
+.card {font-size: 44px;text-align: center; font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Noto Sans JP", Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "MS UI Gothic", sans-serif;}
+.hr {border-top: 1px solid grey; }
+
+.mobile .card, .android .card { padding: 0 }
+
+
+.summary { background-color: rgba(0, 0, 0, 0.15); font-size: 18px; color: #c2c2c2; border-radius: 8px; padding: 2px 8px; width: fit-content; }
+.subdeck { text-align:center; color: #99cfcd; margin-bottom: 8px; font-size: 16px; font-family: Arial;}
+.mobile .subdeck { display: none;}
+/* ------------------------- */
+/* -----HELPERS----- */
+/* ------------------------- */
+.assoc1 { color: #b184bf; }  .assoc2 { color: #da75b0; }  .assoc3 { color: #e690de; }
+.darkcyan { color: #99cfcd; }
+.lightcyan { color: #c7edec; }
+
+.nofurigana rt { opacity: 0; }
+.showfuri rt { opacity: 1; }
+.rthide rt { display: none; }
+.ascenter { align-self: center; }
+.tleft { text-align: left;  }
+
+.mb8 { margin-bottom: 8px; }
+.mb20 { margin-bottom: 20px; }
+.mt8 { margin-top: 8px; }  .mt12 { margin-top: 12px; }  .mt24 { margin-top: 24px; }
+.mh76 { min-height: 76px; }
+.pt12 { padding-top: 12px; }
+.pt24 { padding-top: 24px; }
+.pt36 { padding-top: 36px; }
+.arial {font-family: Arial;}
+.hidden { display: none !important; }
+.flex { display: flex; }
+.trans_text { color: rgba(0, 0, 0, 0); }
+.fs36 { font-size: 36px; }
+
+.mt8 { margin-top: 8px; }
+
+/* If no copy above - it is only for MOBILE exist */
+/* If no copy above - it is only for MOBILE exist */
+.mobile .mbHidden { display: none; }
+
+.piaccent { font-size: 24px; color: #adc9bb; display: block; }
+.pitch {color: #c7edec; font-size: 25px}
+svg.pitch text { font-weight: bold !important; fill: #cce6ff !important; }
+svg.pitch > path { stroke: #cce6ff !important; }
+svg.pitch > circle[r="5"] { fill: #80c1ff !important; }
+svg.pitch > circle[r="3.25"] { fill: #cf9 !important; }
+
+
+.replay-button svg circle { fill: transparent; }
+
+
+
+
+
+
+
+
+.yomitan-glossary > ol > li:not(:first-child) {
+    display: none;
+}
+
+[data-sc-content="forms"],
+[data-sc-content="example-sentence"],
+[data-sc-content="attribution"] {
+    display: none;
+}
+ol > li:first-child i {
+    display: none;
+}
+ol {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+ol >li { margin-bottom: 10px;}
+
+[data-sc-code="adj-na"], [data-sc-code="vi"] {
+    white-space: nowrap;
+}
+
+[data-sc-code="exp"], [data-sc-code="vs-i"], [data-sc-code="col"],
+[data-sc-code="adj-i"], [data-sc-code="uk"], [data-sc-code="n"], [data-sc-code="v5r"],
+[data-sc-code="adv"], [data-sc-code="vs"], [data-sc-code="vt"],
+[data-sc-code="adj-no"], [data-sc-code="pol"], [data-sc-code="fam"],
+[data-sc-code="v1"], [data-sc-code="ksb"], [data-sc-code="pn"],
+[data-sc-code="male"], [data-sc-code="aux-v"], [data-sc-code="vi"],
+[data-sc-code="suf"], [data-sc-code="v5s"], [data-sc-code="abbr"] {
+    width: fit-content;
+    display: inline-flex;
+    vertical-align: top !important;; /* prevents extra top spacing */
+    font-size: 12px !important;
+    line-height1: 1;
+}
+
+[data-dictionary="デジタル大辞泉"] { display: none; }
+
+[data-sc-content="sense-note"] { font-size: 14px;  }
+
+
+[data-sc-content="xref"] {display: none; }
+
+.infobox { width: 100%; max-width: 400px;}
+.infobox li { font-size: 14px}
+.infobox i { display: none; }
+.infobox ul { margin: 0; padding-left: 0px;  list-style-type: none; }
+.infobox { padding-left: 20px;}
+
+.infobox1 { opacity: 0.2; filter: blur(5px); transition: opacity 0.2s ease-in-out;}
+.infobox:hover { opacity: 1; filter: blur(0); }
