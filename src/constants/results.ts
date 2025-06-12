@@ -137,7 +137,7 @@ const event1 = {
 
 const event2= {
   "rules": {
-    "eventName": "New event testing",
+    "eventName": "New event testing 22",
     "dateStart": "2025-06-07",
     "dateEnd": "2025-06-11",
     "pokemonIds": [
