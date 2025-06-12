@@ -46,6 +46,9 @@ const CatchEventBattleHistory: React.FC = () => {
 
   const [showPokemons, setShowPokemons] = useState(true)
 
+  const sortedRes = [...results].reverse();
+  console.log('results', results)
+  console.log('sortedRes', sortedRes)
   return (
     <div>
       <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
@@ -53,9 +56,9 @@ const CatchEventBattleHistory: React.FC = () => {
           <Typography>List of last Events:</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {results.map((re) => (
-            <div>
-              Event: <span className="text-[#87CEEB]">{re.rules.eventName}</span>
+          {sortedRes.map((re) => (
+            <div style={{marginBottom: '4px'}}>
+              Event: <span className="text-[#87CEEB]">{re.rules.eventName}</span> {re.rules.dateStart} - days: {differenceInDays(new Date(re.rules.dateEnd), new Date(re.rules.dateStart)) + 1}
               <Button style={{margin: '0 16px', padding: 0}} variant="contained" onClick={() => setResult(re)}>
                 Load
               </Button></div>
