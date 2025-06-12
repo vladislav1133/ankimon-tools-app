@@ -57,11 +57,16 @@ const CatchEventBattleHistory: React.FC = () => {
         </AccordionSummary>
         <AccordionDetails>
           {sortedRes.map((re) => (
-            <div style={{marginBottom: '4px'}}>
-              Event: <span className="text-[#87CEEB]">{re.rules.eventName}</span> {re.rules.dateStart} - days: {differenceInDays(new Date(re.rules.dateEnd), new Date(re.rules.dateStart)) + 1}
+            <div style={{marginBottom: '16px'}}>
+              Event: <span className="text-[#87CEEB]">{re.rules.eventName}</span>
               <Button style={{margin: '0 16px', padding: 0}} variant="contained" onClick={() => setResult(re)}>
                 Load
-              </Button></div>
+              </Button>
+              <div>
+                
+                <span className="text-[#c6e9f7]">started</span>: {re.rules.dateStart} | <span className="text-[#c6e9f7]">days</span>: {differenceInDays(new Date(re.rules.dateEnd), new Date(re.rules.dateStart)) + 1} | <span className="text-[#c6e9f7]">trainers</span>: {re.users.length}
+              </div>
+              </div>
           ))}
         </AccordionDetails>
       </Accordion>
