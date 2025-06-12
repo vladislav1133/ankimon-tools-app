@@ -30,10 +30,6 @@ const BattlePlayerView = ({user, pokemonIds, idx, showPokemons, sortByTime}: Pro
     ? [...user.pokemons].sort((a, b) => new Date(a.caughtAt || '2150-01-01').getTime() - new Date(b.caughtAt || '2150-01-01').getTime())
     : user.pokemons;
 
-  useEffect(() => {
-    console.log('---1133es 🍉', 'pokemons', pokemons);
-  }, [pokemons]);
-
   return (
     <Box mb={2}>
       <div className="flex">

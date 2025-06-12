@@ -25,6 +25,8 @@ const CatchEventBattleHistory: React.FC = () => {
   const [sortByTime, setSortByTime] = useState(false)
 
 
+  const pubResuts = []
+
   useEffect(() => {
     if (!pokemonIds || pokemonIds.length === 0) {
       setNeedPokemons([]);

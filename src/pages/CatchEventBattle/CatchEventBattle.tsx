@@ -9,6 +9,7 @@ import PokemonGenId from '../../components/PokemonGenId';
 import {getPokemonNameById} from '../../apis/pokemons';
 import {BattlePokemon, EventResult, UserWithPokemons} from '../../types/events';
 import {getParamsPokemons} from '../../utils/url';
+import { parseUTC } from '../../utils/dates.utils';
 
 // type Pokemon = {
 //   name: string;
@@ -34,7 +35,7 @@ const CatchEventBattle: React.FC = () => {
   const dateStart = searchParams.get('date_start') || '';
   const dateEnd = searchParams.get('date_end') || '';
   const eventName = searchParams.get('event_name') || '';
-  const daysCount = differenceInDays(new Date(dateEnd), new Date(dateStart)) + 1;
+  const daysCount = differenceInDays(parseUTC(dateEnd), parseUTC(dateStart)) + 1;
   const presentedGens = getGenListFromIds(pokemonIds);
   const [userName, setUserName] = useState('');
   const [uploadedPokemons, setUploadedPokemons] = useState<AnkiPokemon[] | null>(null);
@@ -84,22 +85,37 @@ const CatchEventBattle: React.FC = () => {
   const filterPokemonsByRules = (
     playerPoks: AnkiPokemon[],
   ): BattlePokemon[] => {
-    const start = new Date(dateStart);
-    start.setHours(0, 0, 0, 0); // Set to 00:00:00.000
 
-    const end = new Date(dateEnd);
-    end.setHours(23, 59, 59, 999); // Set to 23:59:59.999
+
+    // const start = new Date(dateStart);
+    const start = parseUTC(`${dateStart} 00:00:00`)
+    const end = parseUTC(`${dateEnd} 23:59:59`)
+
+    console.log('dateStart', dateStart)
+    console.log('start', start)
+    //const end = new Date(dateEnd);
+
+    //start.setHours(0, 0, 0, 0); // Set to 00:00:00.000
+    //end.setHours(23, 59, 59, 999); // Set to 23:59:59.999
+
 
     return needPokemons.map((needPok) => {
       const matching = playerPoks
         .filter((playerPok) => playerPok.id === needPok.id)
         .filter((p) => {
-          const date = new Date(p.captured_date);
+
+          //const date = new Date(p.captured_date);
+          const date = parseUTC(p.captured_date)
+          console.log(`filter-${p.name}`, 'date', date)
+          console.log(`filter-${p.name}`, 'start', start)
+          console.log(`filter-${p.name}`, 'end', end)
+          console.log(`filter-${p.name}`, 'test', date >= start, date <= end)
+
           return date >= start && date <= end;
         });
 
       const earliest = matching.reduce((min, curr) => {
-        return !min || new Date(curr.captured_date) < new Date(min.captured_date) ? curr : min;
+        return !min || parseUTC(curr.captured_date) < parseUTC(min.captured_date) ? curr : min;
       }, undefined as AnkiPokemon | undefined);
 
       return {
@@ -121,7 +137,7 @@ const CatchEventBattle: React.FC = () => {
 
     const times = passedPokemons
       .filter(p => p.caught && p.caughtAt)
-      .map(p => new Date(p.caughtAt as string).getTime());
+      .map(p => parseUTC(p.caughtAt as string).getTime());
 
     const timeSpent = times.length > 0
       ? Math.max(...times) - Math.min(...times)
