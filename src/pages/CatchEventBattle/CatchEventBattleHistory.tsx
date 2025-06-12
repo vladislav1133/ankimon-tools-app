@@ -8,6 +8,7 @@ import {getPokemonNameById} from '../../apis/pokemons';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {EventResult} from '../../types/events';
 import {results} from '../../constants/results';
+import EventBattleTable from './EventBattleTable';
 
 // type Pokemon = {
 //   name: string;
@@ -23,6 +24,7 @@ const CatchEventBattleHistory: React.FC = () => {
   const pokemonIds = result?.rules.pokemonIds || [];
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
   const [sortByTime, setSortByTime] = useState(false)
+  const [showTable, setShowTable] = useState(false)
 
 
   const pubResuts = []
@@ -114,18 +116,25 @@ const CatchEventBattleHistory: React.FC = () => {
             <Button style={{margin: 0}} variant="outlined" onClick={() => setSortByTime(prev => !prev)} sx={{mt: 2}}>
               Set sort by: {sortByTime ? 'catch time' : 'standard'}
             </Button>
+             <Button style={{margin: 0}} variant="outlined" onClick={() => setShowTable(prev => !prev)} sx={{mt: 2}}>
+                      View by: {showTable ? 'default' : 'table'}
+             </Button>
           </div>
           <hr/>
           <br/>
 
           {/*------------------------ DRAW USERS*/}
-          {result.users.length > 0 && (
+          {!showTable && result.users.length > 0 && (
             <Box mb={4}>
               {result.users.map((user, idx) => (
                 <BattlePlayerView sortByTime={sortByTime} key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
               ))}
             </Box>
           )}
+
+          {showTable && result.users.length > 0 && (
+           <EventBattleTable pokemonIds={pokemonIds} users={result.users}/>
+           )}
         </Box>
       )}
     </div>

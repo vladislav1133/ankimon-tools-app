@@ -10,6 +10,7 @@ import {getPokemonNameById} from '../../apis/pokemons';
 import {BattlePokemon, EventResult, UserWithPokemons} from '../../types/events';
 import {getParamsPokemons} from '../../utils/url';
 import { parseUTC } from '../../utils/dates.utils';
+import EventBattleTable from './EventBattleTable';
 
 // type Pokemon = {
 //   name: string;
@@ -17,17 +18,7 @@ import { parseUTC } from '../../utils/dates.utils';
 //   // Add more fields as needed
 // };
 
-  const formatTimeSpent = (timeSpent: number) => {
-    const raw = formatDuration(intervalToDuration({ start: 0, end: timeSpent }), {
-      format: ['days', 'hours', 'minutes'],
-    });
 
-    return raw
-      .replace(/\bdays?\b/, 'd')
-      .replace(/\bhours?\b/, 'h')
-      .replace(/\bminutes?\b/, 'min');
-  };
-  
 const CatchEventBattle: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,6 +34,7 @@ const CatchEventBattle: React.FC = () => {
   const [needPokemons, setNeedPokemons] = useState<any[]>([]);
   const [showPokemons, setShowPokemons] = useState(true)
   const [sortByTime, setSortByTime] = useState(false)
+  const [showTable, setShowTable] = useState(false)
   const [loadedResult, setLoadedResult] = useState<EventResult>();
 
   useEffect(() => {
@@ -215,12 +207,6 @@ const CatchEventBattle: React.FC = () => {
     reader.readAsText(file);
   };
 
-
-
-  const loadResults = () => {
-
-  }
-
   const backToGenerator = () => {
     const query = window.location.search || window.location.hash.split('?')[1] || '';
     navigate(`/catch-event-make${query ? '?' + query : ''}`);
@@ -232,19 +218,9 @@ const CatchEventBattle: React.FC = () => {
       <br/><br/>
       {/* <input type="file" accept="application/json" onChange={handleFileUpload}/> */}
       <input type="file" accept="application/json" onChange={loadResultFile}/>
-      <Button style={{margin: 0}} variant="outlined" onClick={() => loadResults()}>
-        Load Results
-      </Button>
-
       </div>
   }
 
-const getTableNumber = (num: number) => {
-  if (num === 1) return '1 🏆'
-  if (num === 2) return '2 🥈'
-  if (num === 3) return '3 🥉'
-  return num
-}
   return (
     <div>
       <Typography variant="h4" gutterBottom>Event - <span className="text-[#87CEEB]">
@@ -296,18 +272,12 @@ const getTableNumber = (num: number) => {
         <Button style={{margin: 0}} variant="outlined" onClick={() => setSortByTime(prev => !prev)} sx={{mt: 2}}>
           Set sort by: {sortByTime ? 'catch time' : 'standard'}
         </Button>
+        <Button style={{margin: 0}} variant="outlined" onClick={() => setShowTable(prev => !prev)} sx={{mt: 2}}>
+          View by: {showTable ? 'default' : 'table'}
+        </Button>
       </div>
       <hr/>
       <br/>
-      {users.length > 0 && (
-        <Box mb={4}>
-          {winSortedUsers.map((user, idx) => (
-            <BattlePlayerView sortByTime={sortByTime} key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
-          ))}
-        </Box>
-      )}
-
-
       <Typography variant="h5" gutterBottom>Add user to Table</Typography>
       <Box mb={4}>
         <TextField
@@ -317,36 +287,22 @@ const getTableNumber = (num: number) => {
           onChange={(e) => setUserName(e.target.value)}
           sx={{mb: 2}}
         />
-
         <input type="file" accept="application/json" onChange={handleFileUpload}/>
-
         <Button variant="contained" onClick={handleAddUser} sx={{mt: 2}}>
           Add User with Pokémons
         </Button>
       </Box>
-
-      <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Place</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Caught</TableCell>
-            <TableCell>Time Spent</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {winSortedUsers.map((row, idx) => (
-            <TableRow key={row.name}>
-              <TableCell >{getTableNumber(idx + 1)}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.caughtNum === pokemonIds.length ? `all ${row.caughtNum}` : `${row.caughtNum}/${pokemonIds.length}`}</TableCell>
-              <TableCell>{formatTimeSpent(row.timeSpent)}</TableCell>
-            </TableRow>
+      {!showTable && users.length > 0 && (
+        <Box mb={4}>
+          {winSortedUsers.map((user, idx) => (
+            <BattlePlayerView sortByTime={sortByTime} key={idx} user={user} pokemonIds={pokemonIds} idx={idx} showPokemons={showPokemons}/>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </Box>
+      )}
+
+      {showTable && winSortedUsers && (
+        <EventBattleTable pokemonIds={pokemonIds} users={winSortedUsers}/>
+      )}
     
     </div>
   );
