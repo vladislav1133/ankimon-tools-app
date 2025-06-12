@@ -135,9 +135,9 @@ const event1 = {
   ]
 }
 
-const event2 = {
+const event2= {
   "rules": {
-    "eventName": "Doc's event #1 (beta)",
+    "eventName": "New event testing",
     "dateStart": "2025-06-07",
     "dateEnd": "2025-06-11",
     "pokemonIds": [
@@ -161,7 +161,109 @@ const event2 = {
   },
   "users": [
     {
-      "name": "peace",
+      "name": "sefcio",
+      "caughtNum": 15,
+      "pokemons": [
+        {
+          "id": 37,
+          "name": "vulpix",
+          "caught": true,
+          "caughtAt": "2025-06-07 12:25:53"
+        },
+        {
+          "id": 46,
+          "name": "paras",
+          "caught": true,
+          "caughtAt": "2025-06-07 23:34:14"
+        },
+        {
+          "id": 147,
+          "name": "dratini",
+          "caught": true,
+          "caughtAt": "2025-06-10 14:28:21"
+        },
+        {
+          "id": 181,
+          "name": "ampharos",
+          "caught": true,
+          "caughtAt": "2025-06-07 15:24:09"
+        },
+        {
+          "id": 115,
+          "name": "kangaskhan",
+          "caught": true,
+          "caughtAt": "2025-06-07 12:28:36"
+        },
+        {
+          "id": 221,
+          "name": "piloswine",
+          "caught": true,
+          "caughtAt": "2025-06-07 15:26:18"
+        },
+        {
+          "id": 176,
+          "name": "togetic",
+          "caught": true,
+          "caughtAt": "2025-06-07 12:38:19"
+        },
+        {
+          "id": 62,
+          "name": "poliwrath",
+          "caught": true,
+          "caughtAt": "2025-06-08 22:38:37"
+        },
+        {
+          "id": 89,
+          "name": "muk",
+          "caught": true,
+          "caughtAt": "2025-06-08 22:40:30"
+        },
+        {
+          "id": 198,
+          "name": "murkrow",
+          "caught": true,
+          "caughtAt": "2025-06-08 20:25:13"
+        },
+        {
+          "id": 54,
+          "name": "psyduck",
+          "caught": true,
+          "caughtAt": "2025-06-07 12:38:59"
+        },
+        {
+          "id": 25,
+          "name": "pikachu",
+          "caught": true,
+          "caughtAt": "2025-06-08 20:24:23"
+        },
+        {
+          "id": 41,
+          "name": "zubat",
+          "caught": true,
+          "caughtAt": "2025-06-08 20:30:37"
+        },
+        {
+          "id": 95,
+          "name": "onix",
+          "caught": true,
+          "caughtAt": "2025-06-07 23:32:41"
+        },
+        {
+          "id": 44,
+          "name": "gloom",
+          "caught": true,
+          "caughtAt": "2025-06-07 23:36:31"
+        },
+        {
+          "id": 144,
+          "name": "articuno",
+          "caught": false
+        }
+      ],
+      "timeSpent": 266548000
+    },
+    {
+      "name": "p",
       "caughtNum": 13,
       "pokemons": [
         {
@@ -261,7 +363,7 @@ const event2 = {
       "timeSpent": 289409000
     },
     {
-      "name": "morg",
+      "name": "m",
       "caughtNum": 11,
       "pokemons": [
         {
@@ -359,7 +461,105 @@ const event2 = {
       "timeSpent": 116678000
     },
     {
-      "name": "hitomi",
+      "name": "vi",
+      "caughtNum": 11,
+      "pokemons": [
+        {
+          "id": 37,
+          "name": "vulpix",
+          "caught": true,
+          "caughtAt": "2025-06-10 15:45:46"
+        },
+        {
+          "id": 46,
+          "name": "paras",
+          "caught": true,
+          "caughtAt": "2025-06-10 17:48:40"
+        },
+        {
+          "id": 147,
+          "name": "dratini",
+          "caught": false
+        },
+        {
+          "id": 181,
+          "name": "ampharos",
+          "caught": false
+        },
+        {
+          "id": 115,
+          "name": "kangaskhan",
+          "caught": true,
+          "caughtAt": "2025-06-10 18:11:58"
+        },
+        {
+          "id": 221,
+          "name": "piloswine",
+          "caught": true,
+          "caughtAt": "2025-06-07 15:01:20"
+        },
+        {
+          "id": 176,
+          "name": "togetic",
+          "caught": true,
+          "caughtAt": "2025-06-10 21:14:18"
+        },
+        {
+          "id": 62,
+          "name": "poliwrath",
+          "caught": true,
+          "caughtAt": "2025-06-11 00:11:57"
+        },
+        {
+          "id": 89,
+          "name": "muk",
+          "caught": true,
+          "caughtAt": "2025-06-07 15:16:55"
+        },
+        {
+          "id": 198,
+          "name": "murkrow",
+          "caught": true,
+          "caughtAt": "2025-06-09 14:07:54"
+        },
+        {
+          "id": 54,
+          "name": "psyduck",
+          "caught": false
+        },
+        {
+          "id": 25,
+          "name": "pikachu",
+          "caught": true,
+          "caughtAt": "2025-06-10 20:58:07"
+        },
+        {
+          "id": 41,
+          "name": "zubat",
+          "caught": true,
+          "caughtAt": "2025-06-07 15:12:58"
+        },
+        {
+          "id": 95,
+          "name": "onix",
+          "caught": true,
+          "caughtAt": "2025-06-07 14:40:47"
+        },
+        {
+          "id": 44,
+          "name": "gloom",
+          "caught": false
+        },
+        {
+          "id": 144,
+          "name": "articuno",
+          "caught": false
+        }
+      ],
+      "timeSpent": 293470000
+    },
+    {
+      "name": "hit",
       "caughtNum": 6,
       "pokemons": [
         {
