@@ -78,13 +78,9 @@ const CatchEventBattle: React.FC = () => {
     playerPoks: AnkiPokemon[],
   ): BattlePokemon[] => {
 
-
     // const start = new Date(dateStart);
     const start = parseUTC(`${dateStart} 00:00:00`)
     const end = parseUTC(`${dateEnd} 23:59:59`)
-
-    console.log('dateStart', dateStart)
-    console.log('start', start)
     //const end = new Date(dateEnd);
 
     //start.setHours(0, 0, 0, 0); // Set to 00:00:00.000
@@ -95,13 +91,9 @@ const CatchEventBattle: React.FC = () => {
       const matching = playerPoks
         .filter((playerPok) => playerPok.id === needPok.id)
         .filter((p) => {
-
           //const date = new Date(p.captured_date);
           const date = parseUTC(p.captured_date)
-          console.log(`filter-${p.name}`, 'date', date)
-          console.log(`filter-${p.name}`, 'start', start)
-          console.log(`filter-${p.name}`, 'end', end)
-          console.log(`filter-${p.name}`, 'test', date >= start, date <= end)
+    
 
           return date >= start && date <= end;
         });
