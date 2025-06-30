@@ -135,7 +135,7 @@ const event1 = {
   ]
 }
 
-const event2= {
+const event2 = {
   "rules": {
     "eventName": "Doc's first event",
     "dateStart": "2025-06-07",
@@ -468,7 +468,7 @@ const event2= {
       "timeSpent": 266548000
     },
     {
-      "name": "Morganite",
+      "name": "morganite",
       "caughtNum": 15,
       "pokemons": [
         {
@@ -670,8 +670,8 @@ const event2= {
       "timeSpent": 289409000
     },
     {
-      "name": "hitomi",
-      "caughtNum": 12,
+      "name": "bidoof",
+      "caughtNum": 13,
       "pokemons": [
         {
           "id": 37,
@@ -720,6 +720,12 @@ const event2= {
           "caughtAt": "2025-06-08 08:38:46"
         },
         {
+          "id": 25,
+          "name": "pikachu",
+          "caught": true,
+          "caughtAt": "2025-06-08 08:38:46"
+        },
+        {
           "id": 89,
           "name": "muk",
           "caught": true,
@@ -736,11 +742,6 @@ const event2= {
           "name": "psyduck",
           "caught": true,
           "caughtAt": "2025-06-07 19:47:19"
-        },
-        {
-          "id": 25,
-          "name": "pikachu",
-          "caught": false
         },
         {
           "id": 41,

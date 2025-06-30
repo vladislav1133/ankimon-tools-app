@@ -9,12 +9,23 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { EventResult } from '../../types/events';
 import { results } from '../../constants/results';
 import EventBattleTable from './EventBattleTable';
+import { getEvWinner } from '../../utils/history_n_stats.utils';
 
 // type Pokemon = {
 //   name: string;
 //   id: number;
 //   // Add more fields as needed
 // };
+
+const lastEvent = results[results.length-1]
+const lastWinner = getEvWinner(lastEvent, true)
+
+
+
+console.log('eee', lastEvent)
+console.log('eee winner', lastWinner)
+
+
 
 const CatchEventBattleHistory: React.FC = () => {
   const [expanded, setExpanded] = useState(true);
@@ -139,6 +150,11 @@ const CatchEventBattleHistory: React.FC = () => {
           ))}
         </AccordionDetails>
       </Accordion>
+
+      <div className="border-t border-b pt-2 pb-2 mb-4">
+        Actual <span className="text-[#ffcc00] cursor-default" title="Title for player who catch all pokemons in shortest period">Crown of Swiftness</span> holder is - <span className="text-[#87CEEB] text-[22px] cursor-default" title="Title for player who catch all pokemons in shortest period">👑 {lastWinner?.name} 👑</span>
+      </div>
+
 
 
       {!showTable && result && (
