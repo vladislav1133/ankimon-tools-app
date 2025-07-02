@@ -19,6 +19,12 @@ interface Props {
 
 const EventBattleTable: React.FC<Props> = ({ users, pokemonIds }) => {
   
+const completeSpan = (
+<span className="text-green-300 border border-green-300 px-1 rounded">
+    complete
+  </span>
+  )
+
 const getTableNumber = (num: number) => {
   if (num === 1) return '1 🏆'
   if (num === 2) return '2 🥈'
@@ -43,7 +49,7 @@ const getTableNumber = (num: number) => {
             <TableRow key={row.name}>
               <TableCell >{getTableNumber(idx + 1)}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.caughtNum === pokemonIds.length ? `all ${row.caughtNum}` : `${row.caughtNum}/${pokemonIds.length}`}</TableCell>
+              <TableCell>{row.caughtNum === pokemonIds.length ? <>all {row.caughtNum}&nbsp;&nbsp;&nbsp;{completeSpan}</> : `${row.caughtNum}/${pokemonIds.length}`}</TableCell>
               <TableCell>{formatTimeSpent(row.timeSpent)}</TableCell>
             </TableRow>
           ))}

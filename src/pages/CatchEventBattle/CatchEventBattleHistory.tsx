@@ -9,25 +9,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { EventResult } from '../../types/events';
 import { results } from '../../constants/results';
 import EventBattleTable from './EventBattleTable';
-import { getEvWinner } from '../../utils/history_n_stats.utils';
+import { getEvSlowKing, getEvWinner } from '../../utils/history_n_stats.utils';
+import slowKingPic from '../../assets/pics/slowking_head.png'; // adjust path as needed
+import EventWinnersBanner from '../../components/EventWinnersBanner';
+import { useSearchParams } from 'react-router-dom';
+import { getTimeLeftString } from '../../utils/dates.utils';
 
-// type Pokemon = {
-//   name: string;
-//   id: number;
-//   // Add more fields as needed
-// };
 
 const lastEvent = results[results.length-1]
 const lastWinner = getEvWinner(lastEvent, true)
-
-
-
-console.log('eee', lastEvent)
-console.log('eee winner', lastWinner)
-
-
+const lastSlowKing = getEvSlowKing(lastEvent)
 
 const CatchEventBattleHistory: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [expanded, setExpanded] = useState(true);
   const [result, setResult] = useState<EventResult>();
   const daysCount = differenceInDays(new Date(result?.rules.dateEnd || ''), new Date(result?.rules.dateStart || '')) + 1;
@@ -37,6 +31,21 @@ const CatchEventBattleHistory: React.FC = () => {
   const [sortByTime, setSortByTime] = useState(false)
   const [showTable, setShowTable] = useState(false)
 
+    useEffect(() => {
+    const loaded = searchParams.get('loaded');
+
+    if (typeof loaded === 'string' && /^\d+$/.test(loaded)) {
+      const loadedNum = Number(loaded);
+      setResult([...results].reverse()  [loadedNum])
+    }
+
+    const viewType = searchParams.get('viewType');
+    if (viewType === 'table') {
+      setShowTable(true);
+    } else {
+      setShowTable(false);
+    }
+  }, [searchParams]);
 
   const pubResuts = []
 
@@ -64,16 +73,38 @@ const CatchEventBattleHistory: React.FC = () => {
   const sortedRes = [...results].reverse();
 
 
+  const loadResult = (re: EventResult, idx = -1) => {
+    setResult(re)
+
+    if (idx !== -1) {
+      searchParams.set('loaded', String(idx));
+      setSearchParams(searchParams);
+    }
+    
+  }
+
+  const setShowTableValue = (bool: boolean) => {
+    setShowTable(bool)
+
+    console.log('ssssss', bool )
+    if (bool) {
+      searchParams.set('viewType', 'table');
+    } else {
+      searchParams.set('viewType', 'default');
+    }
+    setSearchParams(searchParams);
+
+  }
 
   const mainPart = result && (
     <>
       <Typography variant="h4" gutterBottom>Event - <span className="text-[#87CEEB]">{result.rules.eventName}</span></Typography>
       <div className="border rounded p-2 mb-2 mt-2">
-        <div>Rules: <span className="text-[#ffb3b3]">catch as much as possible!</span>
+        <div>Rules: <span className="text-[#ffb3b3]">catch all of listed pokemons!</span>
         </div>
         <div>From: {result.rules.dateStart} 00:00</div>
         <div>Upto: {result.rules.dateEnd} 23:59</div>
-        <div>Days: {daysCount}</div>
+        <div>Days: {daysCount} ({getTimeLeftString(`${result.rules.dateEnd} 23:59:59`, `${result.rules.dateStart} 00:00:00`)})</div>
       </div>
       <div>
         <div className="flex gap-2">
@@ -110,7 +141,7 @@ const CatchEventBattleHistory: React.FC = () => {
           </>
         )}
 
-        <Button style={{ margin: 0 }} variant="outlined" onClick={() => setShowTable(prev => !prev)} sx={{ mt: 2 }}>
+        <Button style={{ margin: 0 }} variant="outlined" onClick={() => setShowTableValue(!showTable)} sx={{ mt: 2 }}>
           View by: {showTable ? 'default' : 'table'}
         </Button>
       </div>
@@ -128,7 +159,6 @@ const CatchEventBattleHistory: React.FC = () => {
     </>
   )
 
-
   return (
     <div>
       <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
@@ -136,10 +166,10 @@ const CatchEventBattleHistory: React.FC = () => {
           <Typography>List of last Events:</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {sortedRes.map((re) => (
+          {sortedRes.map((re, idx) => (
             <div style={{ marginBottom: '16px' }}>
               Event: <span className="text-[#87CEEB]">{re.rules.eventName}</span>
-              <Button style={{ margin: '0 16px', padding: 0 }} variant="contained" onClick={() => setResult(re)}>
+              <Button style={{ margin: '0 16px', padding: 0 }} variant="contained" onClick={() => loadResult(re, idx)}>
                 Load
               </Button>
               <div>
@@ -151,10 +181,7 @@ const CatchEventBattleHistory: React.FC = () => {
         </AccordionDetails>
       </Accordion>
 
-      <div className="border-t border-b pt-2 pb-2 mb-4">
-        Actual <span className="text-[#ffcc00] cursor-default" title="Title for player who catch all pokemons in shortest period">Crown of Swiftness</span> holder is - <span className="text-[#87CEEB] text-[22px] cursor-default" title="Title for player who catch all pokemons in shortest period">👑 {lastWinner?.name} 👑</span>
-      </div>
-
+      <EventWinnersBanner />
 
 
       {!showTable && result && (

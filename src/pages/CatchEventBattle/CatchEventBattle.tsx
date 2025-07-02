@@ -9,7 +9,7 @@ import PokemonGenId from '../../components/PokemonGenId';
 import {getPokemonNameById} from '../../apis/pokemons';
 import {BattlePokemon, EventResult, UserWithPokemons} from '../../types/events';
 import {getParamsPokemons} from '../../utils/url';
-import { parseUTC } from '../../utils/dates.utils';
+import { getTimeLeftString, parseUTC } from '../../utils/dates.utils';
 import EventBattleTable from './EventBattleTable';
 
 // type Pokemon = {
@@ -26,7 +26,7 @@ const CatchEventBattle: React.FC = () => {
   const dateStart = searchParams.get('date_start') || '';
   const dateEnd = searchParams.get('date_end') || '';
   const eventName = searchParams.get('event_name') || '';
-  const daysCount = differenceInDays(parseUTC(dateEnd), parseUTC(dateStart)) + 1;
+  const daysCount = differenceInDays(parseUTC(`${dateEnd} 00:00:00`), parseUTC(`${dateStart} 00:00:00`)) + 1;
   const presentedGens = getGenListFromIds(pokemonIds);
   const [userName, setUserName] = useState('');
   const [uploadedPokemons, setUploadedPokemons] = useState<AnkiPokemon[] | null>(null);
@@ -228,10 +228,10 @@ const CatchEventBattle: React.FC = () => {
       </Typography>
 
       <div className="border rounded p-2 mb-2 mt-2">
-        <div>Rules: <span className="text-[#ffb3b3]">catch as much as possible!</span></div>
+        <div>Rules: <span className="text-[#ffb3b3]">catch all of listed pokemons!</span></div>
         <div>From: {dateStart} 00:00</div>
         <div>Upto: {dateEnd} 23:59</div>
-        <div>Days: {daysCount}</div>
+        <div>Days: {daysCount} ({getTimeLeftString(`${dateEnd} 23:59:59`, `${dateStart} 00:00:00`)})</div>
       </div>
       <div>
         <div>Generation include:</div>
@@ -270,7 +270,7 @@ const CatchEventBattle: React.FC = () => {
       </div>
       <hr/>
       <br/>
-      <Typography variant="h5" gutterBottom>Add user to Table</Typography>
+      <Typography variant="h5" gutterBottom>Add user to table - (to verify what pokemons user already have)</Typography>
       <Box mb={4}>
         <TextField
           label="User Name"

@@ -29,7 +29,7 @@ const CatchEventGenerator: React.FC = () => {
   const [link, setLink] = useState('');
   const [startDate, setStartDate] = useState(searchParams.get('date_start') || getTomorrowDate());
   const [endDate, setEndDate] = useState(searchParams.get('date_end') || getDayAfterTomorrowDate());
-  const [eventName, setEventName] = useState(searchParams.get('event_name') || `KAS's alpha event #1`);
+  const [eventName, setEventName] = useState(searchParams.get('event_name') || `test name`);
 
   const paramPoks = getParamsPokemons(searchParams);
   const exPokemonSet = paramPoks.length ? paramPoks : getRndUniArr(1, 150, 6);

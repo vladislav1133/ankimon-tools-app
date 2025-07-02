@@ -2,7 +2,7 @@ import {EventResult} from '../types/events';
 
 const event1 = {
   "rules": {
-    "eventName": "KAS's alpha event #1",
+    "eventName": "KAS's alpha test event",
     "dateStart": "2025-05-29",
     "dateEnd": "2025-05-30",
     "pokemonIds": [
@@ -137,7 +137,7 @@ const event1 = {
 
 const event2 = {
   "rules": {
-    "eventName": "Doc's first event",
+    "eventName": "Doc's first event #1",
     "dateStart": "2025-06-07",
     "dateEnd": "2025-06-11",
     "pokemonIds": [
@@ -1148,7 +1148,960 @@ const event2 = {
   ]
 }
 
+const event3cats = {
+  "rules": {
+    "eventName": "June's evee/cats grab event #2",
+    "dateStart": "2025-06-16",
+    "dateEnd": "2025-06-30",
+    "pokemonIds": [
+      52,
+      53,
+      133,
+      134,
+      135,
+      136,
+      196,
+      197,
+      215,
+      431,
+      432,
+      461,
+      470,
+      471,
+      677,
+      678,
+      700
+    ]
+  },
+  "users": [
+    {
+      "name": "everjade",
+      "caughtNum": 17,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": true,
+          "caughtAt": "2025-06-16 17:26:08"
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": true,
+          "caughtAt": "2025-06-16 17:12:43"
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": true,
+          "caughtAt": "2025-06-16 17:20:52"
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": true,
+          "caughtAt": "2025-06-17 15:25:33"
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": true,
+          "caughtAt": "2025-06-17 14:48:30"
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": true,
+          "caughtAt": "2025-06-16 17:13:13"
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": true,
+          "caughtAt": "2025-06-17 15:46:06"
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": true,
+          "caughtAt": "2025-06-16 00:52:34"
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-17 16:49:59"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": true,
+          "caughtAt": "2025-06-16 01:31:05"
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": true,
+          "caughtAt": "2025-06-16 17:06:24"
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": true,
+          "caughtAt": "2025-06-16 01:20:36"
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": true,
+          "caughtAt": "2025-06-16 01:33:47"
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": true,
+          "caughtAt": "2025-06-16 01:25:12"
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-17 22:42:52"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": true,
+          "caughtAt": "2025-06-17 22:18:34"
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": true,
+          "caughtAt": "2025-06-17 21:34:03"
+        }
+      ],
+      "timeSpent": 165018000
+    },
+    {
+      "name": "vi",
+      "caughtNum": 17,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": true,
+          "caughtAt": "2025-06-16 13:19:53"
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": true,
+          "caughtAt": "2025-06-17 00:30:19"
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": true,
+          "caughtAt": "2025-06-18 12:51:27"
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": true,
+          "caughtAt": "2025-06-16 12:13:11"
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": true,
+          "caughtAt": "2025-06-20 00:04:06"
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": true,
+          "caughtAt": "2025-06-21 12:37:20"
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": true,
+          "caughtAt": "2025-06-21 23:27:42"
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": true,
+          "caughtAt": "2025-06-17 14:35:20"
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-16 13:02:34"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": true,
+          "caughtAt": "2025-06-17 11:45:35"
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": true,
+          "caughtAt": "2025-06-18 23:07:04"
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": true,
+          "caughtAt": "2025-06-16 12:46:47"
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": true,
+          "caughtAt": "2025-06-17 11:54:14"
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": true,
+          "caughtAt": "2025-06-20 00:18:39"
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-17 14:24:56"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": true,
+          "caughtAt": "2025-06-17 12:31:43"
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": true,
+          "caughtAt": "2025-06-16 13:55:22"
+        }
+      ],
+      "timeSpent": 472471000
+    },
+    {
+      "name": "kas",
+      "caughtNum": 17,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": true,
+          "caughtAt": "2025-06-19 10:37:23"
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": true,
+          "caughtAt": "2025-06-23 17:52:14"
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": true,
+          "caughtAt": "2025-06-17 11:04:46"
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": true,
+          "caughtAt": "2025-06-17 13:10:04"
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": true,
+          "caughtAt": "2025-06-17 11:12:09"
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": true,
+          "caughtAt": "2025-06-19 11:43:40"
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": true,
+          "caughtAt": "2025-06-20 20:55:01"
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": true,
+          "caughtAt": "2025-06-19 22:02:50"
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-19 22:43:12"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": true,
+          "caughtAt": "2025-06-21 09:59:46"
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": true,
+          "caughtAt": "2025-06-16 21:56:21"
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": true,
+          "caughtAt": "2025-06-16 17:07:18"
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": true,
+          "caughtAt": "2025-06-16 11:16:23"
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": true,
+          "caughtAt": "2025-06-16 10:24:10"
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-19 18:37:04"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": true,
+          "caughtAt": "2025-06-19 17:26:03"
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": true,
+          "caughtAt": "2025-06-19 13:07:21"
+        }
+      ],
+      "timeSpent": 631684000
+    },
+    {
+      "name": "sefcio",
+      "caughtNum": 12,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": false
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": false
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": true,
+          "caughtAt": "2025-06-18 17:35:56"
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": true,
+          "caughtAt": "2025-06-23 21:24:32"
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": false
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": false
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": true,
+          "caughtAt": "2025-06-24 13:01:46"
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": true,
+          "caughtAt": "2025-06-29 19:01:27"
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-20 20:58:39"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": true,
+          "caughtAt": "2025-06-23 17:41:17"
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": true,
+          "caughtAt": "2025-06-16 20:37:10"
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": true,
+          "caughtAt": "2025-06-23 17:19:57"
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": true,
+          "caughtAt": "2025-06-24 14:11:29"
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": false
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-20 14:29:37"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": true,
+          "caughtAt": "2025-06-18 15:44:31"
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": true,
+          "caughtAt": "2025-06-27 13:06:42"
+        }
+      ],
+      "timeSpent": 1117457000
+    },
+    {
+      "name": "h0tp",
+      "caughtNum": 11,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": true,
+          "caughtAt": "2025-06-21 16:34:51"
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": true,
+          "caughtAt": "2025-06-20 21:45:18"
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": false
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": false
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": true,
+          "caughtAt": "2025-06-21 17:17:37"
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": false
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": false
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": true,
+          "caughtAt": "2025-06-21 22:14:38"
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-27 17:39:59"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": false
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": false
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": true,
+          "caughtAt": "2025-06-23 22:04:13"
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": true,
+          "caughtAt": "2025-06-20 23:51:46"
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": true,
+          "caughtAt": "2025-06-27 14:27:51"
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-18 17:57:40"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": true,
+          "caughtAt": "2025-06-16 12:32:01"
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": true,
+          "caughtAt": "2025-06-16 00:56:06"
+        }
+      ],
+      "timeSpent": 1010633000
+    },
+    {
+      "name": "gcwen3166",
+      "caughtNum": 8,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": true,
+          "caughtAt": "2025-06-25 21:42:46"
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": true,
+          "caughtAt": "2025-06-23 18:30:57"
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": true,
+          "caughtAt": "2025-06-21 16:00:03"
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": false
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": false
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": false
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": false
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": false
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-18 22:12:47"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": true,
+          "caughtAt": "2025-06-23 18:32:40"
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": true,
+          "caughtAt": "2025-06-22 13:11:29"
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": false
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": false
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": false
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-23 18:25:32"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": true,
+          "caughtAt": "2025-06-21 12:46:21"
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": false
+        }
+      ],
+      "timeSpent": 602999000
+    },
+    {
+      "name": "peace",
+      "caughtNum": 8,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": false
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": false
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": false
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": false
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": true,
+          "caughtAt": "2025-06-23 14:33:18"
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": true,
+          "caughtAt": "2025-06-19 10:38:41"
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": true,
+          "caughtAt": "2025-06-27 23:58:53"
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": true,
+          "caughtAt": "2025-06-22 22:59:14"
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": false
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": true,
+          "caughtAt": "2025-06-20 15:43:01"
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": false
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": true,
+          "caughtAt": "2025-06-30 23:31:46"
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": false
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": false
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-20 15:40:41"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": true,
+          "caughtAt": "2025-06-20 22:21:04"
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": false
+        }
+      ],
+      "timeSpent": 996785000
+    },
+    {
+      "name": "johanna",
+      "caughtNum": 4,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": true,
+          "caughtAt": "2025-06-20 13:33:03"
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": false
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": false
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": false
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": false
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": false
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": false
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": false
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-20 15:41:30"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": true,
+          "caughtAt": "2025-06-16 02:34:08"
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": false
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": false
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": false
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": false
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": true,
+          "caughtAt": "2025-06-20 13:39:57"
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": false
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": false
+        }
+      ],
+      "timeSpent": 392842000
+    },
+    {
+      "name": "morganite",
+      "caughtNum": 1,
+      "pokemons": [
+        {
+          "id": 52,
+          "name": "meowth",
+          "caught": false
+        },
+        {
+          "id": 53,
+          "name": "persian",
+          "caught": false
+        },
+        {
+          "id": 133,
+          "name": "eevee",
+          "caught": false
+        },
+        {
+          "id": 134,
+          "name": "vaporeon",
+          "caught": false
+        },
+        {
+          "id": 135,
+          "name": "jolteon",
+          "caught": false
+        },
+        {
+          "id": 136,
+          "name": "flareon",
+          "caught": false
+        },
+        {
+          "id": 196,
+          "name": "espeon",
+          "caught": false
+        },
+        {
+          "id": 197,
+          "name": "umbreon",
+          "caught": false
+        },
+        {
+          "id": 215,
+          "name": "sneasel",
+          "caught": true,
+          "caughtAt": "2025-06-17 21:44:16"
+        },
+        {
+          "id": 431,
+          "name": "glameow",
+          "caught": false
+        },
+        {
+          "id": 432,
+          "name": "purugly",
+          "caught": false
+        },
+        {
+          "id": 461,
+          "name": "weavile",
+          "caught": false
+        },
+        {
+          "id": 470,
+          "name": "leafeon",
+          "caught": false
+        },
+        {
+          "id": 471,
+          "name": "glaceon",
+          "caught": false
+        },
+        {
+          "id": 677,
+          "name": "espurr",
+          "caught": false
+        },
+        {
+          "id": 678,
+          "name": "meowstic-male",
+          "caught": false
+        },
+        {
+          "id": 700,
+          "name": "sylveon",
+          "caught": false
+        }
+      ],
+      "timeSpent": 0
+    }
+  ]
+};
+
 export const results: EventResult[] = [
   event1,
-  event2
+  event2,
+  event3cats
 ];
