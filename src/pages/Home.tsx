@@ -3,7 +3,7 @@ import { Button, Typography } from '@mui/material';
 import EventWinnersBanner from '../components/EventWinnersBanner';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const acualEvLnik = '/catch-event-battle?catchPokemons=978%2C976%2C963%2C964%2C977%2C846%2C847%2C904%2C550%2C594%2C602%2C603%2C604%2C129%2C130%2C118%2C119%2C116%2C117&date_start=2025-07-05&date_end=2025-07-19&event_name=Fishing+Season+1+🐟+%28July%2C+2025%29'
+const acualEvLnik = '/catch-event-battle?catchPokemons=846%2C847%2C550%2C594%2C602%2C603%2C604%2C129%2C130%2C118%2C119%2C116%2C117%2C349%2C350%2C318%2C319%2C367%2C368%2C370%2C339%2C340%2C369&date_start=2025-07-05&date_end=2025-07-25&event_name=Fishing+Season+1+%F0%9F%90%9F+%28July%2C+2025%29'
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
