@@ -9,8 +9,16 @@ import {
   ListItem,
   Typography,
   Pagination,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from '@mui/material';
 import { legendaryList } from '../constants/rarities/all_rarities';
+import { format } from 'date-fns';
 
 const PokemonReviewer: React.FC = () => {
   const [pokemons, setPokemons] = useState<any[]>([]);
@@ -109,13 +117,36 @@ const PokemonReviewer: React.FC = () => {
             Pokémon List ({filteredPokemons.length})
           </Typography>
 
-          <List>
-            {currentItems.map((p, index) => (
-              <ListItem key={p.id || index}>
-                {p.name} {p.isLegendary && '🌟'} {p.isMythical && '✨'}
-              </ListItem>
-            ))}
-          </List>
+
+
+
+
+          <TableContainer component={Paper} sx={{ mt: 2 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell><strong>Image</strong></TableCell>
+                  <TableCell><strong>Name</strong></TableCell>
+                  <TableCell><strong>Level</strong></TableCell>
+                  <TableCell><strong>Caught Date</strong></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {currentItems.map((p, index) => (
+                  <TableRow key={p.id || index}>
+                    <TableCell><img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`} alt={p.name} width="96" height="96" /></TableCell>
+                    <TableCell>{p.name}</TableCell>
+                    <TableCell>{p.level ?? '—'}</TableCell>
+                    <TableCell>
+                      {p.captured_date
+                        ? format(new Date(p.captured_date), 'dd MMM yyyy, HH:mm')
+                        : '—'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
           <Box display="flex" justifyContent="center" mt={2}>
             <Pagination
