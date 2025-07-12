@@ -126,6 +126,7 @@ const PokemonReviewer: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell><strong>Image</strong></TableCell>
+                  <TableCell><strong>ID</strong></TableCell>
                   <TableCell><strong>Name</strong></TableCell>
                   <TableCell><strong>Level</strong></TableCell>
                   <TableCell><strong>Caught Date</strong></TableCell>
@@ -135,6 +136,7 @@ const PokemonReviewer: React.FC = () => {
                 {currentItems.map((p, index) => (
                   <TableRow key={p.id || index}>
                     <TableCell><img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`} alt={p.name} width="96" height="96" /></TableCell>
+                    <TableCell>{p.id}</TableCell>
                     <TableCell>{p.name}</TableCell>
                     <TableCell>{p.level ?? '—'}</TableCell>
                     <TableCell>
