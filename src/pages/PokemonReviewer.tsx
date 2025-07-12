@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
+  Checkbox,
   Container,
+  FormControlLabel,
   List,
   ListItem,
   Typography,
   Pagination,
 } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { legendaryList } from '../constants/rarities/all_rarities';
 
 const PokemonReviewer: React.FC = () => {
-  const [searchParams] = useSearchParams();
   const [pokemons, setPokemons] = useState<any[]>([]);
   const [page, setPage] = useState(1);
+  const [showLegendary, setShowLegendary] = useState(false);
+  const [showMythical, setShowMythical] = useState(false);
+
   const itemsPerPage = 10;
 
   const handleFileChange = (e: any) => {
@@ -25,7 +29,7 @@ const PokemonReviewer: React.FC = () => {
       try {
         const json = JSON.parse(event.target.result);
         setPokemons(json);
-        setPage(1); // Reset to first page on new upload
+        setPage(1);
       } catch (error) {
         console.error('Invalid JSON file:', error);
       }
@@ -33,9 +37,23 @@ const PokemonReviewer: React.FC = () => {
     reader.readAsText(file);
   };
 
-  // Pagination logic
-  const totalPages = Math.ceil(pokemons.length / itemsPerPage);
-  const currentItems = pokemons.slice(
+  // 🔍 Apply filters
+  const filteredPokemons = pokemons.filter((p) => {
+    // const isMythical = p.isMythical === true;
+
+    if (showLegendary || showMythical) {
+      if (showLegendary) { if (legendaryList.includes(p.id)) return true; }
+
+      return false
+    }
+
+    // if (!showMythical && isMythical) return false;
+    return true;
+  });
+
+  // 📄 Pagination logic
+  const totalPages = Math.ceil(filteredPokemons.length / itemsPerPage);
+  const currentItems = filteredPokemons.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
@@ -66,13 +84,36 @@ const PokemonReviewer: React.FC = () => {
 
       {pokemons.length > 0 && (
         <>
+          <Box mt={3}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showLegendary}
+                  onChange={(e) => setShowLegendary(e.target.checked)}
+                />
+              }
+              label="Show Legendaries"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showMythical}
+                  onChange={(e) => setShowMythical(e.target.checked)}
+                />
+              }
+              label="Show Mythicals"
+            />
+          </Box>
+
           <Typography variant="h6" sx={{ marginTop: 3 }}>
-            Pokémon List
+            Pokémon List ({filteredPokemons.length})
           </Typography>
 
           <List>
             {currentItems.map((p, index) => (
-              <ListItem key={index}>{p.name}</ListItem>
+              <ListItem key={p.id || index}>
+                {p.name} {p.isLegendary && '🌟'} {p.isMythical && '✨'}
+              </ListItem>
             ))}
           </List>
 
