@@ -18,6 +18,7 @@ import Home from './pages/Home';
 import CatchEventGenerator from './pages/CatchEventGenerator';
 import CatchEventBattle from './pages/CatchEventBattle/CatchEventBattle';
 import CatchEventBattleHistory from './pages/CatchEventBattle/CatchEventBattleHistory';
+import PokemonReviewer from './pages/PokemonReviewer';
 
 const darkTheme = createTheme({palette: {mode: "dark",},});
 
@@ -76,7 +77,18 @@ function App(props: Props) {
         {/*  </ListItem>*/}
         {/*))}*/}
       </List>
+
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate('/pokemons-management')}>
+            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemText primary={'Pokemons - management'} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+
       <Divider />
+
       <List>
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate('/catch-event-make')}>
@@ -193,6 +205,7 @@ function App(props: Props) {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/pokemons-management" element={<PokemonReviewer />} />
               <Route path="/catch-event-make" element={<CatchEventGenerator />} />
               <Route path="/catch-event-battle" element={<CatchEventBattle />} />
               <Route path="/catch-event-history" element={<CatchEventBattleHistory />} />
